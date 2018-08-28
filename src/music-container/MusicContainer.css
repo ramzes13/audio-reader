@@ -1,0 +1,10 @@
+.allButtons {
+  display: block;
+}
+
+.actions {
+  float: left;
+}
+.zoom {
+  float: right;
+}

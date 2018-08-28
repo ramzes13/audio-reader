@@ -5,7 +5,11 @@ import TimelinePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js
 import RegionPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.regions.min.js';
 import CursorPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.cursor.min.js';
 
+import styles from './MusicContainer.css'
+
 import Actions from './Actions';
+import Zoom from './Zoom';
+import Region from './Region';
 
 class MusicContainer extends Component {
   constructor(props) {
@@ -22,7 +26,8 @@ class MusicContainer extends Component {
       container: '#waveform',
       forceDecode: true,
       height: 256,
-      // splitChannels: true,
+      responsive: true,
+      mediaControls: true,
       plugins: [
         TimelinePlugin.create({
           container: "#waveform-timeline"
@@ -36,18 +41,39 @@ class MusicContainer extends Component {
 
     wavesurfer.on('ready', function () {
       that.setState({ wavesurfer });
-      console.log('sound init')
-      wavesurfer.addRegion({ end: 3 });
+      const regions = that.props.storage.getRegions();
+
+      regions.forEach(region => {
+        wavesurfer.addRegion(region);
+      });
       // wavesurfer.play();
     });
   }
 
   render() {
+    let playerConfigs;
+
+    if (this.state.wavesurfer) {
+      playerConfigs = (
+        <div className='row'>
+          <div className='col-sm'>
+            <Actions wavesurfer={this.state.wavesurfer}></Actions>
+          </div>
+          <div className='col-sm'>
+            <Region wavesurfer={this.state.wavesurfer}></Region>
+          </div>
+          <div className='col-sm'>
+            <Zoom wavesurfer={this.state.wavesurfer}></Zoom>
+          </div>
+        </div>
+      )
+    }
+
     return (
       <div id='music-container'>
         <div id='waveform'></div>
         <div id='waveform-timeline'></div>
-        <Actions wavesurfer={this.state.wavesurfer}></Actions>
+        {playerConfigs}
       </div>
     )
   }
