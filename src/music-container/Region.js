@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
 
-const { getLastRegionTime } = require('../utils/wavesurfer-util');
-const { generateRegionData } = require('../utils/wavesurfer-region');
+const { addRegionToEnd } = require('../utils/wavesurfer-util');
 
 class Region extends Component {
 
@@ -77,12 +76,12 @@ class Region extends Component {
   }
 
   createNewRegion() {
-    const regionTimeEnd = this.wavesurfer.getCurrentTime();
-    const regionTimeStart = getLastRegionTime(this.wavesurfer.regions);
+    const end = this.wavesurfer.getCurrentTime();
+    addRegionToEnd(this.wavesurfer, end);
 
-    this.setState((prevState, props) => {
-      return { selectedRegion: null };
-    });
+    // this.setState((prevState, props) => {
+    //   return { selectedRegion: null };
+    // });
   }
 
   render() {

@@ -37,11 +37,13 @@ class MusicContainer extends Component {
       ]
     });
 
+    wavesurfer.appStorage = this.props.storage;
+
     wavesurfer.load('/demo.wav');
 
     wavesurfer.on('ready', function () {
       that.setState({ wavesurfer });
-      const regions = that.props.storage.getRegions();
+      const regions = wavesurfer.appStorage.getRegions();
 
       regions.forEach(region => {
         wavesurfer.addRegion(region);

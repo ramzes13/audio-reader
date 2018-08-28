@@ -4,18 +4,7 @@ class Storage {
   storage = {};
 
   constructor() {
-    console.log('storage constructor');
     this.storage = window.localStorage;
-
-    const regions = [];
-
-    regions.push(generateRegionData({ start: 0, end: 5 }));
-    regions.push(generateRegionData({ start: 5.01, end: 12 }));
-
-    this.setRegions(regions);
-
-    // window.webkitRequestFileSystem(window.PERSISTENT, 1024 * 1024 * 1024, SaveDatFileBro);
-
   }
 
   setRegions(regions) {
@@ -25,6 +14,13 @@ class Storage {
   getRegions() {
     const regions = JSON.parse(this.storage.regions);
     return regions || [];
+  }
+
+  addNewRegion(region) {
+    const regions = this.getRegions();
+    regions.push(region);
+
+    this.setRegions(regions);
   }
 }
 
