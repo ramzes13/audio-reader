@@ -7,6 +7,12 @@ module.exports = {
 
 function addRegionToEnd(wavesurfer, end) {
   const start = getLastRegionTime(wavesurfer.regions);
+
+  if (end < start) {
+    alert('fmmm blea');
+    return;
+  }
+
   const newRegionData = generateRegionData({ end, start });
 
   wavesurfer.addRegion(newRegionData);

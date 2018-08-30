@@ -12,9 +12,7 @@ class Actions extends Component {
   }
 
   onToggleStartStop() {
-    console.log(this.props.wavesurfer)
     this.props.wavesurfer.playPause();
-    console.log('click on start');
 
     this.setState((prevState, props) => {
       return { playing: !prevState.playing };

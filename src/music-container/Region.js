@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
+import tinyColor from 'tinycolor2';
 
 const { addRegionToEnd } = require('../utils/wavesurfer-util');
 
@@ -36,30 +37,49 @@ class Region extends Component {
 
     this.wavesurfer.on('region-mouseenter', function (region, e) {
       console.log('region-mouseenter');
-      e.stopPropagation();
+      if (!region.app_tinyColorObj) {
+        region.app_tinyColorObj = tinyColor(region.color)
+      }
+
+      region.app_tinyColorObj.setAlpha(.5);
+      region.color = region.app_tinyColorObj.toRgbString();
+
+      region.updateRender();
     });
 
     this.wavesurfer.on('region-mouseleave', function (region, e) {
-      console.log('region-mouseleave')
-      e.stopPropagation();
+      if (!region.app_isActive) {
+        deselectRegion(region);
+      }
     });
 
     this.wavesurfer.on('region-click', function (region, e) {
-      // e.stopPropagation();
       that.setState((prevState, props) => {
+
+        if (prevState.selectedRegion && prevState.selectedRegion.id !== region.id) {
+          prevState.selectedRegion.app_isActive = false;
+          deselectRegion(prevState.selectedRegion);
+        }
+
+        region.app_isActive = true;
+
         return Object.assign(prevState, { selectedRegion: region })
       });
 
+      e.stopPropagation();
     });
 
     this.playSelected = this.playSelected.bind(this);
     this.goToCurrentRegion = this.goToCurrentRegion.bind(this);
     this.createNewRegion = this.createNewRegion.bind(this);
+    this.unselectActiveRegion = this.unselectActiveRegion.bind(this);
   }
 
-  onZoomIn() {
+  unselectActiveRegion() {
     this.setState((prevState, props) => {
-      return Object.assign(prevState, { zoom: prevState.zoom -= 10 })
+      prevState.selectedRegion.app_isActive = false;
+
+      return Object.assign(prevState, { selectedRegion: null })
     });
   }
 
@@ -88,10 +108,24 @@ class Region extends Component {
     if (this.state.selectedRegion) {
       return (
         <div>
-          <p>Selected region</p>
-          {displayRegionRange(this.state.selectedRegion)}
-          <Button onClick={this.playSelected} size="sm">Play</Button>
-          <Button onClick={this.goToCurrentRegion} size="sm">Go to current region</Button>
+          <button onClick={this.unselectActiveRegion} type="button" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div className='text-center'>
+            <p>Selected region</p>
+            {displayRegionRange(this.state.selectedRegion)}
+            <div className=''>
+              <Button onClick={this.playSelected} size="sm">Play</Button>
+            </div>
+          </div>
+          <div className='float-left'>
+            <Button onClick={this.playSelected} size="sm">&lArr;</Button>
+            <Button onClick={this.playSelected} size="sm">&rArr;</Button>
+          </div>
+          <div className='float-right'>
+            <Button onClick={this.playSelected} size="sm">&lArr;</Button>
+            <Button onClick={this.playSelected} size="sm">&rArr;</Button>
+          </div>
         </div>
       )
     }
@@ -110,6 +144,13 @@ class Region extends Component {
       </div>
     )
   }
+}
+
+function deselectRegion(region) {
+  region.app_tinyColorObj.setAlpha(.2);
+  region.color = region.app_tinyColorObj.toRgbString();
+
+  region.updateRender();
 }
 
 function displayRegionRange(region) {
