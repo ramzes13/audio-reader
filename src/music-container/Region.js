@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'reactstrap';
 import tinyColor from 'tinycolor2';
 
+import RegionResize from './RegionResize'
 const { addRegionToEnd } = require('../utils/wavesurfer-util');
 
 class Region extends Component {
@@ -63,18 +64,14 @@ class Region extends Component {
     this.goToCurrentRegion = this.goToCurrentRegion.bind(this);
     this.createNewRegion = this.createNewRegion.bind(this);
     this.unselectActiveRegion = this.unselectActiveRegion.bind(this);
-
-    this.leftPartMoveLeft = this.leftPartMoveLeft.bind(this);
-    this.leftPartMoveRight = this.leftPartMoveRight.bind(this);
-    this.rightPartMoveLeft = this.rightPartMoveLeft.bind(this);
-    this.rightPartMoveRight = this.rightPartMoveRight.bind(this);
   }
 
   unselectActiveRegion() {
     this.setState((prevState, props) => {
       prevState.selectedRegion.app_isActive = false;
 
-      return Object.assign(prevState, { selectedRegion: null })
+      deselectRegion(prevState.selectedRegion);
+      return { selectedRegion: null };
     });
   }
 
@@ -95,27 +92,12 @@ class Region extends Component {
     addRegionToEnd(this.wavesurfer, end);
   }
 
-  leftPartMoveLeft() {
-    this.state.selectedRegion;
-  }
-
-  leftPartMoveRight() {
-
-  }
-
-  rightPartMoveLeft() {
-
-  }
-
-  rightPartMoveRight() {
-
-  }
-
   render() {
+
     if (this.state.selectedRegion) {
       return (
         <div>
-          <button onClick={this.unselectActiveRegion} type="button" class="close" aria-label="Close">
+          <button onClick={this.unselectActiveRegion} type="button" className="close" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
           <div className='text-center'>
@@ -125,14 +107,7 @@ class Region extends Component {
               <Button onClick={this.playSelected} size="sm">Play</Button>
             </div>
           </div>
-          <div className='float-left'>
-            <Button onClick={this.leftPartMoveLeft} size="sm">&lArr;</Button>
-            <Button onClick={this.leftPartMoveRight} size="sm">&rArr;</Button>
-          </div>
-          <div className='float-right'>
-            <Button onClick={this.rightPartMoveLeft} size="sm">&lArr;</Button>
-            <Button onClick={this.rightPartMoveRight} size="sm">&rArr;</Button>
-          </div>
+          <RegionResize region={this.state.selectedRegion}></RegionResize>
         </div>
       )
     }
