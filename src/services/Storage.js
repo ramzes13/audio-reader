@@ -22,6 +22,10 @@ class Storage {
 
     this.setRegions(regions);
   }
+
+  normalize() {
+
+  }
 }
 
 function SaveDatFileBro(localStorage) {

@@ -19,32 +19,20 @@ class Region extends Component {
     this.wavesurfer.on('region-in', function (activeRegion, e) {
       that.setState((prevState, props) => {
         const newState = { activeRegion };
-        // if (prevState.selectedRegion && prevState.selectedRegion.id === activeRegion.id) {
-        //   newState.selectedRegion = null;
-        // }
-
         return newState;
       });
-      // console.log(' region-in');
     });
 
     this.wavesurfer.on('region-out', function (region, e) {
-      // console.log('region-out');
       that.setState((prevState, props) => {
         return { activeRegion: null };
       });
     });
 
     this.wavesurfer.on('region-mouseenter', function (region, e) {
-      console.log('region-mouseenter');
-      if (!region.app_tinyColorObj) {
-        region.app_tinyColorObj = tinyColor(region.color)
+      if (!region.app_isActive) {
+        selectRegion(region);
       }
-
-      region.app_tinyColorObj.setAlpha(.5);
-      region.color = region.app_tinyColorObj.toRgbString();
-
-      region.updateRender();
     });
 
     this.wavesurfer.on('region-mouseleave', function (region, e) {
@@ -63,7 +51,9 @@ class Region extends Component {
 
         region.app_isActive = true;
 
-        return Object.assign(prevState, { selectedRegion: region })
+        selectRegion(region, 0.85);
+
+        return { selectedRegion: region };
       });
 
       e.stopPropagation();
@@ -73,6 +63,11 @@ class Region extends Component {
     this.goToCurrentRegion = this.goToCurrentRegion.bind(this);
     this.createNewRegion = this.createNewRegion.bind(this);
     this.unselectActiveRegion = this.unselectActiveRegion.bind(this);
+
+    this.leftPartMoveLeft = this.leftPartMoveLeft.bind(this);
+    this.leftPartMoveRight = this.leftPartMoveRight.bind(this);
+    this.rightPartMoveLeft = this.rightPartMoveLeft.bind(this);
+    this.rightPartMoveRight = this.rightPartMoveRight.bind(this);
   }
 
   unselectActiveRegion() {
@@ -98,10 +93,22 @@ class Region extends Component {
   createNewRegion() {
     const end = this.wavesurfer.getCurrentTime();
     addRegionToEnd(this.wavesurfer, end);
+  }
 
-    // this.setState((prevState, props) => {
-    //   return { selectedRegion: null };
-    // });
+  leftPartMoveLeft() {
+    this.state.selectedRegion;
+  }
+
+  leftPartMoveRight() {
+
+  }
+
+  rightPartMoveLeft() {
+
+  }
+
+  rightPartMoveRight() {
+
   }
 
   render() {
@@ -119,12 +126,12 @@ class Region extends Component {
             </div>
           </div>
           <div className='float-left'>
-            <Button onClick={this.playSelected} size="sm">&lArr;</Button>
-            <Button onClick={this.playSelected} size="sm">&rArr;</Button>
+            <Button onClick={this.leftPartMoveLeft} size="sm">&lArr;</Button>
+            <Button onClick={this.leftPartMoveRight} size="sm">&rArr;</Button>
           </div>
           <div className='float-right'>
-            <Button onClick={this.playSelected} size="sm">&lArr;</Button>
-            <Button onClick={this.playSelected} size="sm">&rArr;</Button>
+            <Button onClick={this.rightPartMoveLeft} size="sm">&lArr;</Button>
+            <Button onClick={this.rightPartMoveRight} size="sm">&rArr;</Button>
           </div>
         </div>
       )
@@ -161,5 +168,14 @@ function formatTime(time) {
   return parseFloat(time).toFixed(2);
 }
 
+function selectRegion(region, alphaValue = 0.6) {
+  if (!region.app_tinyColorObj) {
+    region.app_tinyColorObj = tinyColor(region.color)
+  }
+  region.app_tinyColorObj.setAlpha(alphaValue);
+  region.color = region.app_tinyColorObj.toRgbString();
+
+  region.updateRender();
+}
 
 export default Region;

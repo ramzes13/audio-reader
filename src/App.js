@@ -9,6 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.storage = new Storage();
+    this.storage.normalize();
   }
   render() {
     return (

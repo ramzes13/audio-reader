@@ -5,7 +5,6 @@ import TimelinePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js
 import RegionPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.regions.min.js';
 import CursorPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.cursor.min.js';
 
-import styles from './MusicContainer.css'
 
 import Actions from './Actions';
 import Zoom from './Zoom';
