@@ -4,6 +4,7 @@ import Storage from './services/Storage';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import MusicContainer from './music-container/MusicContainer';
+import ReadingContainer from './reading-container/ReadingContainer';
 
 class App extends Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class App extends Component {
     return (
       <div className='container-fluid'>
         <MusicContainer storage={this.storage}> </MusicContainer>
+        <ReadingContainer storage={this.storage}> </ReadingContainer>
       </div>
     );
   }

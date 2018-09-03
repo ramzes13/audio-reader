@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.1.1",
-    "pdfjs-dist": "^2.0.489",
+    "epubjs": "^0.3.71",
     "randomcolor": "^0.5.3",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
