@@ -1,0 +1,34 @@
+#reading-container-prev {
+  left: 0;
+}
+
+#reading-container-next {
+  right: 0;
+}
+
+.spreads {
+  width: 900px;
+  height: 600px;
+  box-shadow: 0 0 4px #ccc;
+  border-radius: 5px;
+  padding: 0;
+  position: relative;
+  margin: 10px auto;
+  /* background: white url('ajax-loader.gif') center center no-repeat; */
+  top: calc(50vh - 400px);
+}
+
+.arrow {
+  position: fixed;
+  top: 50%;
+  margin-top: -32px;
+  font-size: 64px;
+  color: #E2E2E2;
+  font-family: arial, sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  text-decoration: none;
+}

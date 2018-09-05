@@ -12,8 +12,9 @@ class Storage {
   }
 
   getRegions() {
-    const regions = JSON.parse(this.storage.regions);
-    return regions || [];
+    // const regions = JSON.parse(this.storage.regions);
+    // return regions || [];
+    return [];
   }
 
   addNewRegion(region) {
