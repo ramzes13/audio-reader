@@ -13,7 +13,7 @@ class RegionResize extends Component {
   }
 
   leftPartMoveLeft() {
-    this.props.region.start = this.props.region.start - 1;
+    this.props.region.start = this.props.region.start - 1; 
     this.redrawRegion();
   }
 

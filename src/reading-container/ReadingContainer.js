@@ -11,7 +11,7 @@ class ReadingContainer extends Component {
 
     this.nextPage = this.nextPage.bind(this);
     this.prevPage = this.prevPage.bind(this);
-    this.listAnnotations = this.listAnnotations.bind(this);
+    this.prepareMeta = this.prepareMeta.bind(this);
   }
 
   nextPage() {
@@ -23,15 +23,29 @@ class ReadingContainer extends Component {
     console.log('prevPage')
   }
 
+  prepareMeta(cfiRange) {
+    this.book.getRange(cfiRange).then((range) => {
+      if (range) {
+        let label = range.toString().trim();
+        const selectedTxt = label.split(' ');
+        console.log('aaaaaaaaaaaaaaa')
+        if (selectedTxt.length > 6) {
+          label = `${selectedTxt.slice(0, 3).join(' ')} ... ${selectedTxt.slice(-3).join(' ')}`;
+        }
+
+        this.props.onChangeMeta({ cfiRange, label });
+      }
+    });
+  }
+
   componentDidMount() {
     this.book = ePub("/lof.epub");
     this.rendition = this.book.renderTo("epub-reading-container",
       {
+        manager: "continuous",
+        flow: "scrolled-doc",
         width: "100%",
-        height: 600,
-        spread: "always",
-        ignoreClass: 'annotator-hl',
-        manager: "continuous"
+        height: "100%"
       });
 
     var displayed = this.rendition.display(11);
@@ -45,14 +59,18 @@ class ReadingContainer extends Component {
     });
 
     this.rendition.on("selected", (cfiRange, contents) => {
-      this.book.getRange(cfiRange).then((range) => {
-        console.log({ range })
-      });
-      console.log(this.rendition.annotations)
-      this.rendition.annotations.add(this.props.annotationType, cfiRange, {}, (e) => {
-        console.log("this.rendition.annotations", this.rendition.annotations);
-        console.log({ cfiRange });
-      });
+
+      this.prepareMeta(cfiRange);
+      // this.book.getRange(cfiRange).then((range) => {
+      //   if (range) {
+      //     this.props.onChangeMeta({ cfiRange, range });
+      //   }
+      // });
+      // console.log(this.rendition.annotations)
+      // this.rendition.annotations.add(this.props.annotationType, cfiRange, {}, (e) => {
+      //   console.log("this.rendition.annotations", this.rendition.annotations);
+      //   console.log({ cfiRange });
+      // });
 
       // this.rendition.annotations.mark(cfiRange, {}, (e) => {
       //   console.log("this.rendition.annotations", this.rendition.annotations);
@@ -73,22 +91,13 @@ class ReadingContainer extends Component {
 
   }
 
-  listAnnotations() {
-    console.log('listAnnotations');
-    this.rendition.annotations.each();
-    // this.rendition.annotations.each((data) => {
-    //   console.log({ data });
-    // })
-  }
-
   render() {
-
     return (
-      <div>
+      <div className="row clearfix">
         <div id="epub-reading-container" className="spreads"></div>
         <a onClick={this.prevPage} id="reading-container-prev" href="#prev" className="arrow">‹</a>
         <a onClick={this.nextPage} id="reading-container-next" href="#next" className="arrow">›</a>
-        <button onClick={this.listAnnotations} className="btn ">List annotations</button>
+        {/* <button onClick={this.listAnnotations} className="btn ">List annotations</button> */}
       </div>
 
     )

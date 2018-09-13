@@ -10,7 +10,7 @@ import Actions from './Actions';
 import Zoom from './Zoom';
 import Region from './Region';
 
-class MusicContainer extends Component {
+class Wavesurfer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,7 +23,9 @@ class MusicContainer extends Component {
 
     var wavesurfer = WaveSurfer.create({
       container: '#waveform',
-      forceDecode: true,
+      // forceDecode: true,
+      backend: 'MediaElement',
+      // mediaType: 'audio',
       height: 256,
       responsive: true,
       mediaControls: true,
@@ -38,7 +40,7 @@ class MusicContainer extends Component {
 
     wavesurfer.appStorage = this.props.storage;
 
-    wavesurfer.load('/demo.wav');
+    wavesurfer.load('/first.ogg');
 
     wavesurfer.on('ready', function () {
       that.setState({ wavesurfer });
@@ -80,4 +82,4 @@ class MusicContainer extends Component {
   }
 }
 
-export default MusicContainer;
+export default Wavesurfer;

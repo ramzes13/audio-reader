@@ -5,12 +5,14 @@
   "dependencies": {
     "bootstrap": "^4.1.1",
     "epubjs": "^0.3.71",
+    "peaks.js": "github:ramzes13/peaks.js",
     "randomcolor": "^0.5.3",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-scripts": "1.1.5",
     "reactstrap": "^6.4.0",
     "tinycolor2": "^1.4.1",
+    "waveform-data": "^2.0.2",
     "wavesurfer.js": "^2.0.6"
   },
   "scripts": {

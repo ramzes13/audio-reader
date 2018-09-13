@@ -3,7 +3,7 @@ import { Button } from 'reactstrap';
 import tinyColor from 'tinycolor2';
 
 import RegionResize from './RegionResize'
-const { addRegionToEnd } = require('../utils/wavesurfer-util');
+const { addRegionToEnd } = require('../../utils/wavesurfer-util');
 
 class Region extends Component {
 
