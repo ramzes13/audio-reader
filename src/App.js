@@ -15,7 +15,10 @@ class App extends Component {
       selectedRegion: null,
       creatingNewRegion: true,
       bookMeta: {},
-      audioMeta: {},
+      audioMeta: {
+        startTime: 0,
+        endTime: 0,
+      },
     }
 
     this.storage = new Storage();
@@ -25,6 +28,7 @@ class App extends Component {
     this.cancelCreateNewRegion = this.cancelCreateNewRegion.bind(this);
     this.onChangeMusicMeta = this.onChangeMusicMeta.bind(this);
     this.onChangeBookMeta = this.onChangeBookMeta.bind(this);
+    this.onChangeMusicCurrentTime = this.onChangeMusicCurrentTime.bind(this);
   }
 
   createNewRegion() {
@@ -39,8 +43,16 @@ class App extends Component {
     })
   }
 
-  onChangeMusicMeta(musicMeta) {
+  onChangeMusicMeta(audioMeta) {
+    this.setState((prevState) => {
+      return { audioMeta };
+    });
+  }
 
+  onChangeMusicCurrentTime(currentTime) {
+    this.setState((prevState) => {
+      return prevState.audioMeta.endTime = currentTime;
+    });
   }
 
   onChangeBookMeta(bookMeta) {
@@ -64,8 +76,8 @@ class App extends Component {
 
           <div className="col-6">
             <p>music region</p>
-            <p>start: </p>
-            <p>end: </p>
+            <p>start: <b>{this.state.audioMeta.startTime} s</b></p>
+            <p>end: <b>{this.state.audioMeta.endTime} s</b></p>
           </div>
           <div className="col-6">
             <p>book region: <b>{this.state.bookMeta.label}</b></p>
@@ -81,7 +93,11 @@ class App extends Component {
     }
     return (
       <div className='container-fluid'>
-        {/* <PeaksComponent storage={this.storage}> </PeaksComponent> */}
+        <PeaksComponent
+          onChangeMeta={this.onChangeMusicMeta}
+          onChangeMusicCurrentTime={this.onChangeMusicCurrentTime}
+          storage={this.storage}
+        > </PeaksComponent>
         <ReadingContainer onChangeMeta={this.onChangeBookMeta} storage={this.storage}> </ReadingContainer>
         {regionManagement}
       </div>

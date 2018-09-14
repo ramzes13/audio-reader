@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import Peaks from 'peaks.js';
 import Zoom from './Zoom';
-import Actions from './Actions';
-import Region from './Region';
+import { Button } from 'reactstrap';
 
 Peaks.prototype.getLastSegment = function () {
   let lastSegment = null;
@@ -22,13 +21,18 @@ class PeaksComponent extends Component {
 
     this.state = {
       ready: false,
+      playing: false
     };
+
+    this.onToggleStartStop = this.onToggleStartStop.bind(this);
   }
 
   componentDidMount() {
     const that = this;
 
     that.peaksInstance = Peaks.init({
+      height: 100,
+      keyboard: true,
       container: document.querySelector('#peaks-container'),
       mediaElement: document.querySelector('audio'),
       dataUri: '/first_ogg.json'
@@ -40,7 +44,25 @@ class PeaksComponent extends Component {
       });
       console.log('peaks.ready');
     });
+
+    that.peaksInstance.on('player_time_update', function (currentTime) {
+      that.props.onChangeMusicCurrentTime(formatTime(currentTime));
+    });
   }
+
+  onToggleStartStop() {
+    this.setState((prevState, props) => {
+      if (prevState.playing) {
+        props.onChangeMeta(prepareChangedMeta(this.peaksInstance))
+        this.peaksInstance.player.pause()
+      } else {
+        this.peaksInstance.player.play()
+      }
+
+      return { playing: !prevState.playing };
+    });
+  }
+
 
   render() {
     let playerConfigs;
@@ -49,10 +71,7 @@ class PeaksComponent extends Component {
       playerConfigs = (
         <div className='row'>
           <div className='col-sm'>
-            <Actions peaksInstance={this.peaksInstance}></Actions>
-          </div>
-          <div className='col-sm'>
-            <Region peaksInstance={this.peaksInstance}></Region>
+            <Button size="sm" onClick={this.onToggleStartStop}>Start/Stop</Button>
           </div>
           <div className='col-sm'>
             <Zoom peaksInstance={this.peaksInstance}></Zoom>
@@ -71,4 +90,21 @@ class PeaksComponent extends Component {
   }
 }
 
+function prepareChangedMeta(peaksInstance) {
+  const lastSegment = peaksInstance.getLastSegment();
+  const changedMeta = {
+    startTime: 0,
+    endTime: formatTime(peaksInstance.player.getCurrentTime()),
+  }
+
+  if (lastSegment) {
+    changedMeta.startTime = formatTime(lastSegment.endTime);
+  }
+
+  return changedMeta;
+}
+
+function formatTime(time) {
+  return parseFloat(time).toFixed(2);
+}
 export default PeaksComponent;

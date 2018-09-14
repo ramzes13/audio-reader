@@ -28,7 +28,6 @@ class ReadingContainer extends Component {
       if (range) {
         let label = range.toString().trim();
         const selectedTxt = label.split(' ');
-        console.log('aaaaaaaaaaaaaaa')
         if (selectedTxt.length > 6) {
           label = `${selectedTxt.slice(0, 3).join(' ')} ... ${selectedTxt.slice(-3).join(' ')}`;
         }
