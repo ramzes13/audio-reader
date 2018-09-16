@@ -1,18 +1,7 @@
 import React, { Component } from 'react';
-import Peaks from 'peaks.js';
+import Peaks from './PeaksEntity';
 import Zoom from './Zoom';
 import { Button } from 'reactstrap';
-
-Peaks.prototype.getLastSegment = function () {
-  let lastSegment = null;
-  this.segments._segments.forEach(segment => {
-    if (!lastSegment || lastSegment.endTime < segment.endTime) {
-      lastSegment = segment;
-    }
-  });
-
-  return lastSegment;
-};
 
 class PeaksComponent extends Component {
   constructor(props) {
@@ -35,7 +24,7 @@ class PeaksComponent extends Component {
       keyboard: true,
       container: document.querySelector('#peaks-container'),
       mediaElement: document.querySelector('audio'),
-      dataUri: '/first_ogg.json'
+      dataUri: '/first_ogg.json',
     });
 
     that.peaksInstance.on('peaks.ready', function () {
@@ -65,9 +54,23 @@ class PeaksComponent extends Component {
 
 
   render() {
-    let playerConfigs;
 
+    let playerConfigs;
     if (this.state.ready) {
+
+      const segments = this.props.regions.map((region) => {
+        const { bookMeta, audioMeta } = region;
+        return {
+          editable: true,
+          id: audioMeta.id,
+          startTime: audioMeta.startTime,
+          endTime: audioMeta.endTime,
+          labelText: bookMeta.label
+        }
+      });
+
+      this.peaksInstance.mergeSegments(segments);
+
       playerConfigs = (
         <div className='row'>
           <div className='col-sm'>
@@ -91,6 +94,7 @@ class PeaksComponent extends Component {
 }
 
 function prepareChangedMeta(peaksInstance) {
+  console.log('prepareChangedMeta aaaaaaaaaaaa')
   const lastSegment = peaksInstance.getLastSegment();
   const changedMeta = {
     startTime: 0,
@@ -105,6 +109,6 @@ function prepareChangedMeta(peaksInstance) {
 }
 
 function formatTime(time) {
-  return parseFloat(time).toFixed(2);
+  return parseFloat(time.toFixed(2));
 }
 export default PeaksComponent;

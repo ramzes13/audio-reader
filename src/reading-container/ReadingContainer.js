@@ -50,11 +50,11 @@ class ReadingContainer extends Component {
     var displayed = this.rendition.display(11);
 
     this.rendition.on("layout", function (layout) {
-      console.log({ layout })
+      // console.log({ layout })
     });
 
     this.rendition.on("relocated", function (location) {
-      console.log({ location });
+      // console.log({ location });
     });
 
     this.rendition.on("selected", (cfiRange, contents) => {

@@ -25,6 +25,7 @@ class App extends Component {
     this.storage.normalize();
 
     this.createNewRegion = this.createNewRegion.bind(this);
+    this.displayCreateNewRegion = this.displayCreateNewRegion.bind(this);
     this.cancelCreateNewRegion = this.cancelCreateNewRegion.bind(this);
     this.onChangeMusicMeta = this.onChangeMusicMeta.bind(this);
     this.onChangeBookMeta = this.onChangeBookMeta.bind(this);
@@ -32,6 +33,23 @@ class App extends Component {
   }
 
   createNewRegion() {
+    if (!isValidNewRegionData()) {
+      return alert('fmmm');
+    }
+    const { bookMeta, audioMeta } = this.state;
+    audioMeta.id = ID();
+    this.storage.addNewRegion({ bookMeta, audioMeta });
+
+    this.setState((prevState) => {
+      return {
+        creatingNewRegion: false,
+        bookMeta: {},
+        audioMeta: {},
+      }
+    });
+  }
+
+  displayCreateNewRegion() {
     this.setState((prevState) => {
       return { creatingNewRegion: !prevState.creatingNewRegion };
     })
@@ -60,7 +78,7 @@ class App extends Component {
     this.setState((prevState) => {
       return { bookMeta };
     });
-    console.log({ label });
+    // console.log({ label });
   }
 
   render() {
@@ -75,34 +93,50 @@ class App extends Component {
           </div>
 
           <div className="col-6">
-            <p>music region</p>
+            <h4>music region</h4>
             <p>start: <b>{this.state.audioMeta.startTime} s</b></p>
             <p>end: <b>{this.state.audioMeta.endTime} s</b></p>
           </div>
           <div className="col-6">
-            <p>book region: <b>{this.state.bookMeta.label}</b></p>
+            <h4>book region:</h4>
+            <p>Selected region: <b>{this.state.bookMeta.label}</b></p>
+          </div>
+          <div className="col-12">
+            <button className="btn btn-success sm" onClick={this.createNewRegion}>Create</button>
           </div>
         </div>
       )
     } else {
       regionManagement = (
         <div className="row">
-          <button className="btn sm" onClick={this.createNewRegion}>Create new region </button>
+          <button className="btn sm" onClick={this.displayCreateNewRegion}>Config new region </button>
         </div>
       )
     }
+    const regions = this.storage.getRegions();
     return (
       <div className='container-fluid'>
         <PeaksComponent
           onChangeMeta={this.onChangeMusicMeta}
           onChangeMusicCurrentTime={this.onChangeMusicCurrentTime}
-          storage={this.storage}
+          regions={regions}
         > </PeaksComponent>
-        <ReadingContainer onChangeMeta={this.onChangeBookMeta} storage={this.storage}> </ReadingContainer>
+        <ReadingContainer onChangeMeta={this.onChangeBookMeta} regions={regions}> </ReadingContainer>
         {regionManagement}
       </div>
     );
   }
 }
 
+
+function isValidNewRegionData() {
+  return true;
+}
+
+var ID = function () {
+  // Math.random should be unique because of its seeding algorithm.
+  // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+  // after the decimal.
+  return '_' + Math.random().toString(36).substr(2, 9);
+};
 export default App;
