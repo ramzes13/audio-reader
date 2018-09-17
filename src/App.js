@@ -11,7 +11,6 @@ class App extends Component {
     super(props);
 
     this.state = {
-      activeRegion: null,
       selectedRegion: null,
       creatingNewRegion: true,
       bookMeta: {},
@@ -30,6 +29,15 @@ class App extends Component {
     this.onChangeMusicMeta = this.onChangeMusicMeta.bind(this);
     this.onChangeBookMeta = this.onChangeBookMeta.bind(this);
     this.onChangeMusicCurrentTime = this.onChangeMusicCurrentTime.bind(this);
+    this.onRegionClick = this.onRegionClick.bind(this);
+  }
+
+  onRegionClick(regionId) {
+    console.log('clicked on current region', regionId);
+    const selectedRegion = this.storage.getRegionById(regionId);
+    this.setState(() => {
+      return { selectedRegion }
+    })
   }
 
   createNewRegion() {
@@ -37,8 +45,8 @@ class App extends Component {
       return alert('fmmm');
     }
     const { bookMeta, audioMeta } = this.state;
-    audioMeta.id = ID();
-    this.storage.addNewRegion({ bookMeta, audioMeta });
+
+    this.storage.addNewRegion({ bookMeta, audioMeta, id: ID() });
 
     this.setState((prevState) => {
       return {
@@ -78,7 +86,6 @@ class App extends Component {
     this.setState((prevState) => {
       return { bookMeta };
     });
-    // console.log({ label });
   }
 
   render() {
@@ -119,9 +126,14 @@ class App extends Component {
         <PeaksComponent
           onChangeMeta={this.onChangeMusicMeta}
           onChangeMusicCurrentTime={this.onChangeMusicCurrentTime}
+          onRegionClick={this.onRegionClick}
           regions={regions}
         > </PeaksComponent>
-        <ReadingContainer onChangeMeta={this.onChangeBookMeta} regions={regions}> </ReadingContainer>
+        <ReadingContainer
+          onChangeMeta={this.onChangeBookMeta}
+          regions={regions}
+          selectedRegion={this.state.selectedRegion}
+        > </ReadingContainer>
         {regionManagement}
       </div>
     );

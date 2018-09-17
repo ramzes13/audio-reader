@@ -19,6 +19,10 @@ class Storage {
     }
   }
 
+  getRegionById(id) {
+    return this.getRegions().find((region) => region.id == id);
+  }
+
   addNewRegion(region) {
     const regions = this.getRegions();
     regions.push(region);

@@ -9,6 +9,10 @@ class ReadingContainer extends Component {
     this.book;
     this.rendition;
 
+    this.state = {
+      selectedRegion: null,
+    };
+
     this.nextPage = this.nextPage.bind(this);
     this.prevPage = this.prevPage.bind(this);
     this.prepareMeta = this.prepareMeta.bind(this);
@@ -90,13 +94,43 @@ class ReadingContainer extends Component {
 
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+
+
+
+    console.log('componentWillReceiveProps')
+    if (!this.props.selectedRegion) {
+      if (this.state.selectedRegion) {
+        this.rendition.annotations.remove(this.state.selectedRegion.bookMeta.cfiRange);
+        this.setState(() => {
+          return { selectedRegion: null }
+        });
+      }
+    } else {
+      if (this.state.selectedRegion) {
+        if (this.props.selectedRegion.id !== this.state.selectedRegion.id) {
+          this.rendition.annotations.add(this.props.annotationType, this.props.selectedRegion.bookMeta.cfiRange, {}, (e) => { });
+          this.rendition.annotations.remove(this.state.selectedRegion.bookMeta.cfiRange, (e) => { });
+          this.setState(() => {
+            return { selectedRegion: this.props.selectedRegion }
+          });
+        }
+      } else {
+        this.rendition.annotations.add(this.props.annotationType, this.props.selectedRegion.bookMeta.cfiRange, {}, (e) => { });
+        this.setState(() => {
+          return { selectedRegion: this.props.selectedRegion }
+        });
+      }
+    }
+  }
+
   render() {
+
     return (
       <div className="row clearfix">
         <div id="epub-reading-container" className="spreads"></div>
         <a onClick={this.prevPage} id="reading-container-prev" href="#prev" className="arrow">‹</a>
         <a onClick={this.nextPage} id="reading-container-next" href="#next" className="arrow">›</a>
-        {/* <button onClick={this.listAnnotations} className="btn ">List annotations</button> */}
       </div>
 
     )

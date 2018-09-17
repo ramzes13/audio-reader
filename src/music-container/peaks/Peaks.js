@@ -37,12 +37,21 @@ class PeaksComponent extends Component {
     that.peaksInstance.on('player_time_update', function (currentTime) {
       that.props.onChangeMusicCurrentTime(formatTime(currentTime));
     });
+
+    that.peaksInstance.on('segments.click', function (segment) {
+
+      that.props.onRegionClick(segment.id);
+      that.setState((prevState, props) => {
+        that.peaksInstance.player.pause()
+        return { playing: false };
+      });
+    });
   }
 
   onToggleStartStop() {
     this.setState((prevState, props) => {
       if (prevState.playing) {
-        props.onChangeMeta(prepareChangedMeta(this.peaksInstance))
+        // props.onChangeMeta(prepareChangedMeta(this.peaksInstance))
         this.peaksInstance.player.pause()
       } else {
         this.peaksInstance.player.play()
@@ -52,24 +61,26 @@ class PeaksComponent extends Component {
     });
   }
 
+  preRenderPeak() {
+    const segments = this.props.regions.map((region) => {
+      const { bookMeta, audioMeta, id } = region;
+      return {
+        editable: true,
+        id,
+        startTime: audioMeta.startTime,
+        endTime: audioMeta.endTime,
+        labelText: bookMeta.label
+      }
+    });
+
+    this.peaksInstance.mergeSegments(segments);
+  }
 
   render() {
 
     let playerConfigs;
     if (this.state.ready) {
-
-      const segments = this.props.regions.map((region) => {
-        const { bookMeta, audioMeta } = region;
-        return {
-          editable: true,
-          id: audioMeta.id,
-          startTime: audioMeta.startTime,
-          endTime: audioMeta.endTime,
-          labelText: bookMeta.label
-        }
-      });
-
-      this.peaksInstance.mergeSegments(segments);
+      this.preRenderPeak();
 
       playerConfigs = (
         <div className='row'>
@@ -94,7 +105,6 @@ class PeaksComponent extends Component {
 }
 
 function prepareChangedMeta(peaksInstance) {
-  console.log('prepareChangedMeta aaaaaaaaaaaa')
   const lastSegment = peaksInstance.getLastSegment();
   const changedMeta = {
     startTime: 0,
