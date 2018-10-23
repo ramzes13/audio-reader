@@ -7,6 +7,10 @@ class PeaksComponent extends Component {
   constructor(props) {
     super(props);
     this.peaksInstance = null;
+    // this.dataUri = 'http://darii-petru.cf/static/first_ogg.json';
+    this.dataUri = '/first_ogg.json';
+    // this.dataAudioTag = 'http://darii-petru.cf/static/first_ogg.ogg';
+    this.dataAudioTag = '/first_ogg.ogg';
 
     this.state = {
       ready: false,
@@ -24,7 +28,7 @@ class PeaksComponent extends Component {
       keyboard: true,
       container: document.querySelector('#peaks-container'),
       mediaElement: document.querySelector('audio'),
-      dataUri: '/first_ogg.json',
+      dataUri: that.dataUri,
     });
 
     that.peaksInstance.on('peaks.ready', function () {
@@ -51,7 +55,6 @@ class PeaksComponent extends Component {
   onToggleStartStop() {
     this.setState((prevState, props) => {
       if (prevState.playing) {
-        // props.onChangeMeta(prepareChangedMeta(this.peaksInstance))
         this.peaksInstance.player.pause()
       } else {
         this.peaksInstance.player.play()
@@ -96,7 +99,7 @@ class PeaksComponent extends Component {
 
     return (
       <div id='music-container'>
-        <audio ref="audio_tag" src="/first_ogg.ogg" />
+        <audio ref="audio_tag" src={this.dataAudioTag} />
         <div id='peaks-container'></div>
         {playerConfigs}
       </div>

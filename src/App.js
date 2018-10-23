@@ -1,31 +1,41 @@
 import React, { Component } from 'react';
 import './App.css';
 import Storage from './services/Storage';
+import { generateUniqueId } from './services/Util';
+import { isActiveRegion } from './services/RegionUtils';
 import 'bootstrap/dist/css/bootstrap.css';
 
+import AppRegionManagement from './AppRegionManagement';
 import PeaksComponent from './music-container/peaks/Peaks';
 import ReadingContainer from './reading-container/ReadingContainer';
 
+const regionActions = {
+  edit: 'edit',
+  create: 'create',
+}
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       selectedRegion: null,
-      creatingNewRegion: true,
-      bookMeta: {},
-      audioMeta: {
-        startTime: 0,
-        endTime: 0,
-      },
-    }
+      regionAction: null,
+      currentRegionMeta: {
+        bookMeta: {},
+        audioMeta: {
+          startTime: 0,
+          endTime: 0,
+        },
+      }
+    };
 
     this.storage = new Storage();
     this.storage.normalize();
 
-    this.createNewRegion = this.createNewRegion.bind(this);
-    this.displayCreateNewRegion = this.displayCreateNewRegion.bind(this);
-    this.cancelCreateNewRegion = this.cancelCreateNewRegion.bind(this);
+    // this.getRegionMetaByAction = this.getRegionMetaByAction.bind(this);
+    this.beginRegionAction = this.beginRegionAction.bind(this);
+
+    this.cancelRegionAction = this.cancelRegionAction.bind(this);
     this.onChangeMusicMeta = this.onChangeMusicMeta.bind(this);
     this.onChangeBookMeta = this.onChangeBookMeta.bind(this);
     this.onChangeMusicCurrentTime = this.onChangeMusicCurrentTime.bind(this);
@@ -33,39 +43,40 @@ class App extends Component {
   }
 
   onRegionClick(regionId) {
-    console.log('clicked on current region', regionId);
     const selectedRegion = this.storage.getRegionById(regionId);
     this.setState(() => {
       return { selectedRegion }
     })
   }
 
-  createNewRegion() {
+  validateRegionAction() {
     if (!isValidNewRegionData()) {
       return alert('fmmm');
     }
     const { bookMeta, audioMeta } = this.state;
 
-    this.storage.addNewRegion({ bookMeta, audioMeta, id: ID() });
+    this.storage.addNewRegion({ bookMeta, audioMeta, id: generateUniqueId() });
 
     this.setState((prevState) => {
       return {
-        creatingNewRegion: false,
+        regionAction: null,
         bookMeta: {},
         audioMeta: {},
       }
     });
   }
 
-  displayCreateNewRegion() {
-    this.setState((prevState) => {
-      return { creatingNewRegion: !prevState.creatingNewRegion };
-    })
+  beginRegionAction(actionType) {
+    return () => {
+      this.setState((prevState) => {
+        return { regionAction: actionType };
+      })
+    }
   }
 
-  cancelCreateNewRegion() {
+  cancelRegionAction() {
     this.setState((prevState) => {
-      return { creatingNewRegion: false };
+      return { regionAction: null };
     })
   }
 
@@ -75,48 +86,57 @@ class App extends Component {
     });
   }
 
-  onChangeMusicCurrentTime(currentTime) {
+  onChangeBookMeta(bookMeta) {
     this.setState((prevState) => {
-      return prevState.audioMeta.endTime = currentTime;
+      if (prevState.regionAction === regionActions.edit) {
+        prevState.selectedRegion.bookMeta = bookMeta;
+      } else {
+        prevState.currentRegionMeta.bookMeta = bookMeta;
+      }
+
+      return prevState;
     });
   }
 
-  onChangeBookMeta(bookMeta) {
-    const { label } = bookMeta;
+  onChangeMusicCurrentTime(currentTime) {
     this.setState((prevState) => {
-      return { bookMeta };
+      if (prevState.selectedRegion && !isActiveRegion(prevState.selectedRegion, currentTime)) {
+        prevState.selectedRegion = null;
+      }
+      return prevState.currentRegionMeta.audioMeta.endTime = currentTime;
     });
+  }
+
+  getRegionMetaByAction = () => {
+    if (this.state.regionAction === regionActions.edit) {
+      return this.state.selectedRegion;
+    }
+    return this.state.currentRegionMeta;
   }
 
   render() {
     let regionManagement;
-    if (this.state.creatingNewRegion) {
+    if (this.state.regionAction) {
+      const regionMeta = this.getRegionMetaByAction(this.state.regionAction);
       regionManagement = (
-        <div className="row">
-          <div className="col-12">
-            <button onClick={this.cancelCreateNewRegion} type="button" className="close" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-
-          <div className="col-6">
-            <h4>music region</h4>
-            <p>start: <b>{this.state.audioMeta.startTime} s</b></p>
-            <p>end: <b>{this.state.audioMeta.endTime} s</b></p>
-          </div>
-          <div className="col-6">
-            <h4>book region:</h4>
-            <p>Selected region: <b>{this.state.bookMeta.label}</b></p>
-          </div>
-          <div className="col-12">
-            <button className="btn btn-success sm" onClick={this.createNewRegion}>Create</button>
-          </div>
-        </div>
+        <AppRegionManagement
+          region={regionMeta}
+          cancelRegionAction={this.cancelRegionAction}
+          regionAction={this.state.regionAction}
+        ></AppRegionManagement>
       )
     } else {
+      let selectedRegionActions;
+
+      if (this.state.selectedRegion) {
+        selectedRegionActions = (
+          <button className="btn sm" onClick={this.beginRegionAction(regionActions.edit)}>Edit selectedRegion</button>
+        );
+      }
       regionManagement = (
         <div className="row">
-          <button className="btn sm" onClick={this.displayCreateNewRegion}>Config new region </button>
+          <button className="btn sm" onClick={this.beginRegionAction(regionActions.create)}>Config new region </button>
+          {selectedRegionActions}
         </div>
       )
     }
@@ -140,15 +160,8 @@ class App extends Component {
   }
 }
 
-
 function isValidNewRegionData() {
   return true;
 }
 
-var ID = function () {
-  // Math.random should be unique because of its seeding algorithm.
-  // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-  // after the decimal.
-  return '_' + Math.random().toString(36).substr(2, 9);
-};
 export default App;

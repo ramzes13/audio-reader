@@ -24,6 +24,7 @@ class ReadingContainer extends Component {
   }
 
   prevPage() {
+    this.book.package.metadata.direction === "rtl" ? this.rendition.next() : this.rendition.prev();
     console.log('prevPage')
   }
 
@@ -95,10 +96,6 @@ class ReadingContainer extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-
-
-
-    console.log('componentWillReceiveProps')
     if (!this.props.selectedRegion) {
       if (this.state.selectedRegion) {
         this.rendition.annotations.remove(this.state.selectedRegion.bookMeta.cfiRange);
@@ -122,10 +119,11 @@ class ReadingContainer extends Component {
         });
       }
     }
+
+    return false;
   }
 
   render() {
-
     return (
       <div className="row clearfix">
         <div id="epub-reading-container" className="spreads"></div>
