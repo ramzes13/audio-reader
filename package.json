@@ -10,16 +10,25 @@
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-redux": "^5.0.7",
-    "react-scripts": "1.1.5",
     "reactstrap": "^6.4.0",
+    "redux": "^4.0.1",
     "tinycolor2": "^1.4.1",
     "waveform-data": "^2.0.2",
     "wavesurfer.js": "^2.0.6"
+  },
+  "devDependencies": {
+    "react-scripts": "^2.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
