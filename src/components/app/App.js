@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
-import { Provider } from 'react-redux';
+import React, { Component } from 'react'
 
-import './App.css';
-import logo from './logo.svg';
-import store from './store';
+import './App.css'
+import logo from './logo.svg'
 
 class App extends Component {
   render() {
@@ -21,8 +19,8 @@ class App extends Component {
             rel='noopener noreferrer' > Learn React</a>
         </header>
       </div >
-    );
+    )
   }
 }
 
-export default App;
+export default App
