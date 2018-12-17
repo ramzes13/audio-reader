@@ -1,9 +1,7 @@
 import { connect } from 'react-redux'
 import Configs from '../components/configs/Configs'
 
-const mapStateToProps = (state) => ({
-  active: state.configs.active
-})
+const mapStateToProps = state => ({ ...state.configs })
 
 const mapDispatchToProps = (dispatch) => ({
   toggleActive: () => {
