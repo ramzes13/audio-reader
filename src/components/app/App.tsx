@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 
 import './App.css'
-import logo from './logo.svg'
 import ManageConfigs from '../../containers/ManageConfigs';
+import ManageReadingContainer from '../../containers/ManageReadingContainer';
 
 class App extends Component {
   render() {
     return (
       <div>
-        <ManageConfigs />
+        <ManageConfigs /> 
+        {/* <ManageReadingContainer /> */}
       </div>
     )
   }

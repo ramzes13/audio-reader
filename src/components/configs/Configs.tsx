@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ConfigsActive from './ConfigsActive';
 
-const Configs = ({ active, toggleActive }) => (
+const Configs = ({ active, toggleActive }: any) => (
   <div>
     {!active ? (
       <button onClick={toggleActive}>
@@ -15,11 +15,11 @@ const Configs = ({ active, toggleActive }) => (
       )}
   </div>
 
-)
+);
 
-Configs.propTypes = {
-  active: PropTypes.bool.isRequired,
-  toggleActive: PropTypes.func.isRequired
-}
+// Configs.propTypes = {
+//   active: PropTypes.bool.isRequired,
+//   toggleActive: PropTypes.func.isRequired
+// }
 
 export default Configs
