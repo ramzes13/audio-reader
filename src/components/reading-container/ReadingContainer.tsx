@@ -8,10 +8,10 @@ class ReadingContainer extends Component {
   book: any;
   rendition: any;
 
-  static propTypes = {
-    selectedRegion: PropTypes.object.isRequired,
-    annotationType: PropTypes.string.isRequired
-  }
+  // static propTypes = {
+  //   selectedRegion: PropTypes.object.isRequired,
+  //   annotationType: PropTypes.string.isRequired
+  // }
 
   constructor(props: any) {
     super(props);

@@ -1,8 +1,12 @@
-const defaultState = {
+export interface ReducersConfigStore {
+  active: boolean;
+}
+
+const defaultState: ReducersConfigStore = {
   active: false
 }
 
-const configs = (state: any = defaultState, action: any) => {
+const configs = (state: ReducersConfigStore = defaultState, action: any) => {
   console.log({ action });
   switch (action.type) {
     case 'TOGGLE_ACTIVE':

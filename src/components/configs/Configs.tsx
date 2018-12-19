@@ -14,12 +14,11 @@ const Configs = ({ active, toggleActive }: any) => (
         </button>
       )}
   </div>
-
 );
 
-// Configs.propTypes = {
-//   active: PropTypes.bool.isRequired,
-//   toggleActive: PropTypes.func.isRequired
-// }
+Configs.propTypes = {
+  active: PropTypes.bool.isRequired,
+  toggleActive: PropTypes.func.isRequired
+}
 
 export default Configs
