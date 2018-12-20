@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import Button from '@material-ui/core/Button';
+
 import ConfigsActive from './ConfigsActive';
 import { ReducersConfigStore } from '../../reducers/configs';
 import { ReducersInterface } from '../../reducers';
@@ -8,13 +10,9 @@ import { ReducersInterface } from '../../reducers';
 const Configs = ({ active, toggleActive }: any) => (
   <div>
     {!active ? (
-      <button onClick={toggleActive}>
-        Advanced Options
-      </button>
+      <Button onClick={toggleActive} variant="contained" color="secondary">Advanced Options</Button>
     ) : (
-        <button onClick={toggleActive}>
-          Advanced Options activated
-        </button>
+        <Button onClick={toggleActive} variant="contained" color="primary">Advanced Options</Button>
       )}
   </div>
 );
