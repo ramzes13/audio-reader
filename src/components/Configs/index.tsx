@@ -1,6 +1,9 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import ConfigsActive from './ConfigsActive';
+import { ReducersConfigStore } from '../../reducers/configs';
+import { ReducersInterface } from '../../reducers';
 
 const Configs = ({ active, toggleActive }: any) => (
   <div>
@@ -16,9 +19,23 @@ const Configs = ({ active, toggleActive }: any) => (
   </div>
 );
 
+const mapStateToProps = (state: ReducersInterface): ReducersConfigStore => ({ ...state.configs })
+
+const mapDispatchToProps = (dispatch: any) => ({
+  toggleActive: () => {
+    dispatch({ type: 'TOGGLE_ACTIVE' })
+  }
+})
+
 Configs.propTypes = {
   active: PropTypes.bool.isRequired,
   toggleActive: PropTypes.func.isRequired
 }
 
-export default Configs
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Configs)
+
+

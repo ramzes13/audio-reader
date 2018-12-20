@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 
 import './App.css'
-import ManageConfigs from '../../containers/ManageConfigs';
-import ManageReadingContainer from '../../containers/ManageReadingContainer';
+import Configs from '../Configs';
+import ManageReadingContainer from '../ReadingContainer';
 
 class App extends Component {
   render() {
     return (
       <div>
-        <ManageConfigs /> 
+        <Configs /> 
         <ManageReadingContainer />
       </div>
     )
