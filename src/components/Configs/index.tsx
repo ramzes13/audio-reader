@@ -7,14 +7,16 @@ import ConfigsActive from './ConfigsActive';
 import { ReducersConfigStore } from '../../reducers/configs';
 import { ReducersInterface } from '../../reducers';
 
+import UiGenericContainer from '../../ui/GenericComponent';
+
 const Configs = ({ active, toggleActive }: any) => (
-  <div>
+  <UiGenericContainer>
     {!active ? (
       <Button onClick={toggleActive} variant="contained" color="secondary">Advanced Options</Button>
     ) : (
         <Button onClick={toggleActive} variant="contained" color="primary">Advanced Options</Button>
       )}
-  </div>
+  </UiGenericContainer>
 );
 
 const mapStateToProps = (state: ReducersInterface): ReducersConfigStore => ({ ...state.configs })

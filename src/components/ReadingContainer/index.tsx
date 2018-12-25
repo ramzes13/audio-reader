@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import ePub from 'epubjs';
+import UiGenericContainer from '../../ui/GenericComponent';
 
 import './ReadingContainer.css';
 
@@ -132,11 +133,11 @@ class ReadingContainer extends Component {
 
   render() {
     return (
-      <div className="row clearfix">
-        <div id="epub-reading-container" className="spreads"></div>
+      <UiGenericContainer checked={true}>
+        <div id="epub-reading-container" className=""></div>
         <a onClick={this.prevPage} id="reading-container-prev" href="#prev" className="arrow">‹</a>
         <a onClick={this.nextPage} id="reading-container-next" href="#next" className="arrow">›</a>
-      </div>
+      </UiGenericContainer>
 
     )
   }
