@@ -6,16 +6,12 @@ import Button from '@material-ui/core/Button';
 import ConfigsActive from './ConfigsActive';
 import { ReducersConfigStore } from '../../reducers/configs';
 import { ReducersInterface } from '../../reducers';
-
+import { actions } from '../../actions';
 import UiGenericContainer from '../../ui/GenericComponent';
 
 const Configs = ({ active, toggleActive }: any) => (
-  <UiGenericContainer>
-    {!active ? (
-      <Button onClick={toggleActive} variant="contained" color="secondary">Advanced Options</Button>
-    ) : (
-        <Button onClick={toggleActive} variant="contained" color="primary">Advanced Options</Button>
-      )}
+  <UiGenericContainer active={active} toggleActive={toggleActive}>
+    <Button variant="contained" color="primary">Advanced Options</Button>
   </UiGenericContainer>
 );
 
@@ -23,7 +19,7 @@ const mapStateToProps = (state: ReducersInterface): ReducersConfigStore => ({ ..
 
 const mapDispatchToProps = (dispatch: any) => ({
   toggleActive: () => {
-    dispatch({ type: 'TOGGLE_ACTIVE' })
+    dispatch({ type: actions.CONF_TOGLE })
   }
 })
 

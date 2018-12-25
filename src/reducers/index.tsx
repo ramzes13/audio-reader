@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
 import configs, { ReducersConfigStore } from './configs'
-import reading from './reading'
+import reading, { ReducersReadingStore } from './reading'
 
 export interface ReducersInterface {
   configs: ReducersConfigStore
-  reading: any
+  reading: ReducersReadingStore
 }
 export default combineReducers({
   configs,

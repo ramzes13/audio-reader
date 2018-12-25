@@ -7,7 +7,7 @@ import Collapse from '@material-ui/core/Collapse';
 
 const styles = (theme: any) => ({
   root: {
-    height: 180,
+    // height: 180,
   },
   container: {
     display: 'flex',
@@ -27,23 +27,14 @@ const styles = (theme: any) => ({
 });
 
 class SimpleCollapse extends React.Component<any, any>{
-  state = {
-    checked: false,
-  };
-
-  handleChange = () => {
-    this.setState((state: any) => ({ checked: !state.checked }));
-  };
-
   render() {
-    const { classes } = this.props;
-    const { checked } = this.state;
+    const { classes, active, toggleActive } = this.props;
 
     return (
       <div className={classes.root}>
-        <Switch checked={checked} onChange={this.handleChange} aria-label="Collapse" />
+        <Switch checked={active} onChange={toggleActive} aria-label="Collapse" />
         <Paper>
-          <Collapse in={checked}>
+          <Collapse in={active}>
             {this.props.children}
           </Collapse>
         </Paper>

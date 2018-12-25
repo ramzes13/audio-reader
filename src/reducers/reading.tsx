@@ -1,13 +1,21 @@
-const defaultState = {
+import { actions } from '../actions';
+
+export interface ReducersReadingStore {
+  active: boolean;
+  selectedRegion: any,
+  annotationType: string,
+}
+
+const defaultState: ReducersReadingStore = {
+  active: false,
   selectedRegion: null,
   annotationType: 'highlight', //Type of annotation to add: "highlight", "underline", "mark"
 }
 
 const configs = (state: any = defaultState, action: any) => {
-  console.log({ action });
   switch (action.type) {
-    case 'READING_RANGE_SELECT':
-      return { selectedRegion: action.range };
+    case actions.READ_TOGLE:
+      return { active: !state.active };
     default:
       return state
   }

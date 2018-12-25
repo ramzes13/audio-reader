@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import ePub from 'epubjs';
-import UiGenericContainer from '../../ui/GenericComponent';
 
+import { actions } from '../../actions';
+import { ReducersInterface } from '../../reducers';
+import UiGenericContainer from '../../ui/GenericComponent';
 import './ReadingContainer.css';
 
-class ReadingContainer extends Component {
+class ReadingContainer extends Component<any, any> {
   book: any;
   rendition: any;
 
@@ -144,11 +146,11 @@ class ReadingContainer extends Component {
 }
 
 
-const mapStateToProps = (state: any) => ({ ...state.configs })
+const mapStateToProps = (state: any) => ({ ...state.reading })
 
 const mapDispatchToProps = (dispatch: any) => ({
-  onChangeMeta: () => {
-    dispatch({ type: 'TOGGLE_ACTIVE' })
+  toggleActive: () => {
+    dispatch({ type: actions.READ_TOGLE })
   }
 })
 
