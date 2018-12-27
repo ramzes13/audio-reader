@@ -135,7 +135,7 @@ class ReadingContainer extends Component<any, any> {
 
   render() {
     return (
-      <UiGenericContainer checked={true}>
+      <UiGenericContainer active={this.props.active} toggleActive={this.props.toggleActive}>
         <div id="epub-reading-container" className=""></div>
         <a onClick={this.prevPage} id="reading-container-prev" href="#prev" className="arrow">‹</a>
         <a onClick={this.nextPage} id="reading-container-next" href="#next" className="arrow">›</a>
@@ -150,7 +150,7 @@ const mapStateToProps = (state: any) => ({ ...state.reading })
 
 const mapDispatchToProps = (dispatch: any) => ({
   toggleActive: () => {
-    dispatch({ type: actions.READ_TOGLE })
+    dispatch({ type: actions.READ_TOGGLE })
   }
 })
 

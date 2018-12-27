@@ -19,7 +19,7 @@ const mapStateToProps = (state: ReducersInterface): ReducersConfigStore => ({ ..
 
 const mapDispatchToProps = (dispatch: any) => ({
   toggleActive: () => {
-    dispatch({ type: actions.CONF_TOGLE })
+    dispatch({ type: actions.CONF_TOGGLE })
   }
 })
 

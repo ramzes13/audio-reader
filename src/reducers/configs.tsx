@@ -10,7 +10,7 @@ const defaultState: ReducersConfigStore = {
 
 const configs = (state: ReducersConfigStore = defaultState, action: any) => {
   switch (action.type) {
-    case actions.CONF_TOGLE:
+    case actions.CONF_TOGGLE:
       return { active: !state.active };
     default:
       return state

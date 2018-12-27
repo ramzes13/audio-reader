@@ -1,6 +1,6 @@
 export const actions = {
-  CONF_TOGLE: 'CONF_TOGLE',
-  READ_TOGLE: 'READ_TOGLE',
+  CONF_TOGGLE: 'CONF_TOGGLE',
+  READ_TOGGLE: 'READ_TOGGLE',
 }
 let nextTodoId = 0
 export const addTodo = (text: string) => ({

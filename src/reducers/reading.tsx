@@ -14,7 +14,7 @@ const defaultState: ReducersReadingStore = {
 
 const configs = (state: any = defaultState, action: any) => {
   switch (action.type) {
-    case actions.READ_TOGLE:
+    case actions.READ_TOGGLE:
       return { active: !state.active };
     default:
       return state
