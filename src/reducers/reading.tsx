@@ -1,9 +1,9 @@
 import { actions } from '../actions';
 
 export interface ReducersReadingStore {
-  active: boolean;
-  selectedRegion: any,
-  annotationType: string,
+  active?: boolean;
+  selectedRegion?: any,
+  annotationType?: string,
 }
 
 const defaultState: ReducersReadingStore = {

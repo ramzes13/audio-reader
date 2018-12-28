@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es2017",
     "allowJs": true,
     "skipLibCheck": false,
     "esModuleInterop": true,
@@ -16,5 +16,13 @@
   },
   "include": [
     "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/**/*.spec.*",
+    "build",
+    "scripts",
+    "webpack",
+    "src/setupTests.ts"
   ]
 }

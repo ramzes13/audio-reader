@@ -1,14 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import ePub from 'epubjs';
 
 import { actions } from '../../actions';
-import { ReducersInterface } from '../../reducers';
+import { ReducersReadingStore } from '../../reducers/reading';
+
 import UiGenericContainer from '../../ui/GenericComponent';
 import './ReadingContainer.css';
 
-class ReadingContainer extends Component<any, any> {
+export interface ReadingContainerProps extends ReducersReadingStore {
+  toggleActive?: () => any;
+}
+
+class ReadingContainer extends React.Component<ReadingContainerProps, any> {
   book: any;
   rendition: any;
 
@@ -17,16 +22,16 @@ class ReadingContainer extends Component<any, any> {
   //   annotationType: PropTypes.string.isRequired
   // }
 
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      selectedRegion: null,
-    };
+  // constructor(props: any) {
+  //   super(props);
+  //   this.state = {
+  //     selectedRegion: null,
+  //   };
 
-    this.nextPage = this.nextPage.bind(this);
-    this.prevPage = this.prevPage.bind(this);
-    this.prepareMeta = this.prepareMeta.bind(this);
-  }
+  //   this.nextPage = this.nextPage.bind(this);
+  //   this.prevPage = this.prevPage.bind(this);
+  //   this.prepareMeta = this.prepareMeta.bind(this);
+  // }
 
   nextPage() {
     this.book.package.metadata.direction === "rtl" ? this.rendition.prev() : this.rendition.next();
@@ -135,11 +140,13 @@ class ReadingContainer extends Component<any, any> {
 
   render() {
     return (
+      // <div>
       <UiGenericContainer active={this.props.active} toggleActive={this.props.toggleActive}>
         <div id="epub-reading-container" className=""></div>
         <a onClick={this.prevPage} id="reading-container-prev" href="#prev" className="arrow">‹</a>
         <a onClick={this.nextPage} id="reading-container-next" href="#next" className="arrow">›</a>
       </UiGenericContainer>
+      // </div>
 
     )
   }
@@ -148,7 +155,7 @@ class ReadingContainer extends Component<any, any> {
 
 const mapStateToProps = (state: any) => ({ ...state.reading })
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: any): ReadingContainerProps => ({
   toggleActive: () => {
     dispatch({ type: actions.READ_TOGGLE })
   }

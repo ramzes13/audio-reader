@@ -1,18 +1,12 @@
-import React, { Component } from 'react'
+import * as React from 'react';
 
 import './App.css'
 import Configs from '../Configs';
-import ManageReadingContainer from '../ReadingContainer';
+import ReadingContainer from '../ReadingContainer';
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <Configs />
-        <ManageReadingContainer />
-      </div>
-    )
-  }
-}
-
-export default App
+export default () => (
+  <div>
+    <Configs />
+    <ReadingContainer />
+  </div>
+);
