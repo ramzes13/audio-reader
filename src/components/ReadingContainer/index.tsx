@@ -1,19 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
+import { Dispatch, compose } from 'redux';
+
 import ePub from 'epubjs';
 
 import { actions } from '../../actions';
 import { ReducersReadingStore } from '../../reducers/reading';
+import { ReducersInterface } from '../../reducers';
 
 import UiGenericContainer from '../../ui/GenericComponent';
 import './ReadingContainer.css';
 
-export interface ReadingContainerProps extends ReducersReadingStore {
-  toggleActive?: () => any;
+interface DispatchProps {
+  toggleActive() => void;
 }
 
-class ReadingContainer extends React.Component<ReadingContainerProps, any> {
+// export interface ReadingContainerProps extends ReducersReadingStore {
+//   toggleActive?: () => any;
+// }
+
+type Props = ReducersReadingStore & DispatchProps;
+
+class ReadingContainer extends React.Component<Props, any> {
   book: any;
   rendition: any;
 
@@ -153,15 +161,13 @@ class ReadingContainer extends React.Component<ReadingContainerProps, any> {
 }
 
 
-const mapStateToProps = (state: any) => ({ ...state.reading })
+const mapStateToProps = (state: ReducersInterface): ReducersReadingStore => ({ ...state.reading })
 
-const mapDispatchToProps = (dispatch: any): ReadingContainerProps => ({
-  toggleActive: () => {
-    dispatch({ type: actions.READ_TOGGLE })
-  }
+const mapDispatchToProps = (dispatch: Dispatch<DispatchProps>): DispatchProps => ({
+  toggleActive: () => dispatch({ type: actions.READ_TOGGLE })
 })
 
-export default connect(
+export default connect<ReducersReadingStore, DispatchProps>(
   mapStateToProps,
   mapDispatchToProps
 )(ReadingContainer)
