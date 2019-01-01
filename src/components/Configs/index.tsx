@@ -15,9 +15,13 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import { ReducersConfigStore } from '../../reducers/configs';
-import { ReducersInterface } from '../../reducers';
+import { AppState } from '../../reducers';
 import { actions } from '../../actions';
 import styles from './styles';
+
+interface DispatchProps {
+  toggleActive: () => void;
+}
 
 class Configs extends React.Component<any, any>{
 
@@ -62,7 +66,7 @@ class Configs extends React.Component<any, any>{
   };
 }
 
-const mapStateToProps = (state: ReducersInterface): ReducersConfigStore => ({ ...state.configs })
+const mapStateToProps = (state: any): ReducersConfigStore => ({ ...state.configs })
 
 const mapDispatchToProps = (dispatch: any) => ({
   toggleActive: () => {
@@ -70,7 +74,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   }
 })
 
-const component = connect(
+const component = connect<ReducersConfigStore, DispatchProps>(
   mapStateToProps,
   mapDispatchToProps
 )(Configs)
