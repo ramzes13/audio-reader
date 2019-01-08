@@ -1,3 +1,5 @@
+import { Action } from 'redux'
+
 import { actions } from '../actions/configActions';
 
 export interface ReducersConfigInterface {
@@ -8,7 +10,7 @@ const defaultState: ReducersConfigInterface = {
   active: false
 }
 
-const configs = (state: ReducersConfigInterface = defaultState, action: any): ReducersConfigInterface => {
+const configs = (state: ReducersConfigInterface = defaultState, action: Action): ReducersConfigInterface => {
   switch (action.type) {
     case actions.CONF_TOGGLE:
       return { active: !state.active };
