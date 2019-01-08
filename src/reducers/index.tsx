@@ -1,12 +1,16 @@
 import { combineReducers } from 'redux'
-import configs, { ReducersConfigStore } from './configs'
+import configs, { ReducersConfigInterface } from './configs'
 import reading, { ReducersReadingStore } from './reading'
+import global, { ReducersGlobal } from './global'
 
 export type AppState = {
-  configs: ReducersConfigStore
-  reading: ReducersReadingStore
+  configs: ReducersConfigInterface
+  reading: ReducersReadingStore,
+  global: ReducersGlobal,
+
 }
 export default combineReducers<AppState>({
   configs,
   reading,
+  global,
 })

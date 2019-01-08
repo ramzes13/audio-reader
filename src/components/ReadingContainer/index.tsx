@@ -1,12 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { Dispatch, Action } from 'redux';
 
 import ePub from 'epubjs';
 
-import { actions } from '../../actions';
+import { toggleActive } from '../../actions/readingActions';
 import { ReducersReadingStore } from '../../reducers/reading';
-import { AppState } from '../../reducers';
 
 import UiGenericContainer from '../../ui/GenericComponent';
 import './ReadingContainer.css';
@@ -148,24 +146,20 @@ class ReadingContainer extends React.Component<Props, any> {
 
     render() {
         return (
-            // <div>
             <UiGenericContainer active={this.props.active} toggleActive={this.props.toggleActive}>
                 <div id="epub-reading-container" className=""></div>
                 <a onClick={this.prevPage} id="reading-container-prev" href="#prev" className="arrow">‹</a>
                 <a onClick={this.nextPage} id="reading-container-next" href="#next" className="arrow">›</a>
             </UiGenericContainer>
-            // </div>
-
         )
     }
 }
 
-
 const mapStateToProps = (state: any): ReducersReadingStore => ({ ...state.reading })
 
-const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => ({
-    toggleActive: () => dispatch({ type: actions.READ_TOGGLE })
-})
+const mapDispatchToProps = {
+    toggleActive
+};
 
 export default connect<ReducersReadingStore, DispatchProps>(
     mapStateToProps,

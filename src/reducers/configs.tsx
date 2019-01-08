@@ -1,14 +1,14 @@
-import { actions } from '../actions';
+import { actions } from '../actions/configActions';
 
-export interface ReducersConfigStore {
+export interface ReducersConfigInterface {
   active: boolean;
 }
 
-const defaultState: ReducersConfigStore = {
+const defaultState: ReducersConfigInterface = {
   active: false
 }
 
-const configs = (state: ReducersConfigStore = defaultState, action: any): ReducersConfigStore => {
+const configs = (state: ReducersConfigInterface = defaultState, action: any): ReducersConfigInterface => {
   switch (action.type) {
     case actions.CONF_TOGGLE:
       return { active: !state.active };

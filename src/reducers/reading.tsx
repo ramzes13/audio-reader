@@ -1,4 +1,4 @@
-import { actions } from '../actions';
+import { actions } from '../actions/readingActions';
 
 export interface ReducersReadingStore {
   active?: boolean;

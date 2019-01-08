@@ -5,18 +5,16 @@ import { connect } from 'react-redux'
 import Fab from '@material-ui/core/Fab';
 import MenuIcon from '@material-ui/icons/Menu';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import { ReducersConfigStore } from '../../reducers/configs';
-import { AppState } from '../../reducers';
-import { actions } from '../../actions';
+import { ReducersConfigInterface } from '../../reducers/configs';
+import { toggleActive } from '../../actions/configActions';
+import { setActiveNewRegion } from '../../actions/globalActions';
 import styles from './styles';
 
 interface DispatchProps {
@@ -28,30 +26,36 @@ class Configs extends React.Component<any, any>{
   constructor(props: any) {
     super(props);
     this.state = {
-      open: false,
+      open: true,
     }
   }
-
+  displayNewRegion() {
+    console.log('display new region')
+    this.toggleDrawer(false)
+    this.props.setActiveNewRegion()
+  }
   toggleDrawer(open: any) {
     this.setState({ open });
   }
   render() {
     const { classes } = this.props;
-
+    const newRegion = "New region";
     return (
       <div>
+        {JSON.stringify(this.props.global)} active region
         <SwipeableDrawer
           open={this.state.open}
           onClose={e => this.toggleDrawer(false)}
           onOpen={e => this.toggleDrawer(true)}
         >
           <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
+            <ListItem
+              onClick={e => this.displayNewRegion()}
+              button key={newRegion}
+            >
+              <ListItemIcon>{<InboxIcon />}</ListItemIcon>
+              <ListItemText primary={newRegion} />
+            </ListItem>
           </List>
         </SwipeableDrawer>
         <Fab
@@ -66,15 +70,14 @@ class Configs extends React.Component<any, any>{
   };
 }
 
-const mapStateToProps = (state: any): ReducersConfigStore => ({ ...state.configs })
+const mapStateToProps = (state: any): ReducersConfigInterface => ({ ...state.configs, global: state.global })
 
-const mapDispatchToProps = (dispatch: any) => ({
-  toggleActive: () => {
-    dispatch({ type: actions.CONF_TOGGLE })
-  }
-})
+const mapDispatchToProps = {
+  toggleActive,
+  setActiveNewRegion,
+};
 
-const component = connect<ReducersConfigStore, DispatchProps>(
+const component = connect<ReducersConfigInterface, DispatchProps>(
   mapStateToProps,
   mapDispatchToProps
 )(Configs)
