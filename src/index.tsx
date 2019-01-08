@@ -23,7 +23,7 @@ const theme = createMuiTheme({
 import App from './components/App'
 import rootReducer from './reducers'
 
-const store = createStore(rootReducer)
+const store = createStore(rootReducer, {})
 
 render(
   <MuiThemeProvider theme={theme}>

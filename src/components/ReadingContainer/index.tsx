@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import ePub from 'epubjs';
 
-import { toggleActive } from '../../actions/readingActions';
+import { toggleActive, onSelect } from '../../actions/readingActions';
 import { ReducersReadingStore } from '../../reducers/reading';
 
 import UiGenericContainer from '../../ui/GenericComponent';
@@ -11,6 +11,7 @@ import './ReadingContainer.css';
 
 interface DispatchProps {
     toggleActive: () => void;
+    onSelect: (data: any) => void;
 }
 
 // export interface ReadingContainerProps extends ReducersReadingStore {
@@ -58,7 +59,7 @@ class ReadingContainer extends React.Component<Props, any> {
                     label = `${selectedTxt.slice(0, 3).join(' ')} ... ${selectedTxt.slice(-3).join(' ')}`;
                 }
 
-                // this.props.onChangeMeta({ cfiRange, label });
+                this.props.onSelect({ cfiRange, label });
             }
         });
     }
@@ -158,7 +159,8 @@ class ReadingContainer extends React.Component<Props, any> {
 const mapStateToProps = (state: any): ReducersReadingStore => ({ ...state.reading })
 
 const mapDispatchToProps = {
-    toggleActive
+    toggleActive,
+    onSelect,
 };
 
 export default connect<ReducersReadingStore, DispatchProps>(

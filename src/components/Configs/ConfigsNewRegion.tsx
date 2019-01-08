@@ -7,21 +7,28 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 
 import { setInactiveNewRegion } from '../../actions/globalActions';
+import { ReducersConfigInterface } from '../../reducers/configs';
 
-const ConfigsNewRegion = ({ setInactiveNewRegion }: any) => (
+interface DispatchProps {
+  setInactiveNewRegion?: () => void;
+}
+
+type Props = DispatchProps & ReducersConfigInterface;
+
+const ConfigsNewRegion = ({ setInactiveNewRegion, region }: Props) => (
   <Paper elevation={0}>
     <Typography variant="h5" component="h3">
       New region configuration
       <CloseIcon
         style={{ float: 'right', margin: '10px' }}
-        onClick={e => setInactiveNewRegion()}
+        onClick={e => setInactiveNewRegion && setInactiveNewRegion()}
       />
     </Typography>
-    Selected region
+    Selected region: {region && region.read && region.read.label}
   </Paper>
 )
 
-const mapStateToProps = (state: any): any => ({ global: state.global })
+const mapStateToProps = (state: any): any => ({ ...state.configs, global: state.global })
 
 const mapDispatchToProps = {
   setInactiveNewRegion,

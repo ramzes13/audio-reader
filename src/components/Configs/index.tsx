@@ -19,8 +19,8 @@ import ConfigsNewRegion from './ConfigsNewRegion';
 
 interface DispatchProps {
   toggleActive: () => void;
+  setActiveNewRegion: () => void;
 }
-
 class Configs extends React.Component<any, any>{
 
   constructor(props: any) {

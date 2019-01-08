@@ -1,9 +1,9 @@
-import { Action, Reducer } from 'redux'
+import { Action } from 'redux'
 import configs, { ReducersConfigInterface } from './configs'
 import reading, { ReducersReadingStore } from './reading'
 import global, { ReducersGlobal } from './global'
 
-export interface AppState extends Reducer {
+export interface AppState {
   configs: ReducersConfigInterface
   reading: ReducersReadingStore,
   global: ReducersGlobal,
@@ -11,7 +11,7 @@ export interface AppState extends Reducer {
 
 export default function reducer(state: any, action: Action) {
   return {
-    configs: configs(state.configs, action),
+    configs: configs(state.configs, action, state),
     reading: reading(state.reading, action),
     global: global(state.global, action),
   };
