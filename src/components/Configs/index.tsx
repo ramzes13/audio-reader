@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import Fab from '@material-ui/core/Fab';
 import MenuIcon from '@material-ui/icons/Menu';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -16,6 +15,7 @@ import { ReducersConfigInterface } from '../../reducers/configs';
 import { toggleActive } from '../../actions/configActions';
 import { setActiveNewRegion } from '../../actions/globalActions';
 import styles from './styles';
+import ConfigsNewRegion from './ConfigsNewRegion';
 
 interface DispatchProps {
   toggleActive: () => void;
@@ -26,11 +26,10 @@ class Configs extends React.Component<any, any>{
   constructor(props: any) {
     super(props);
     this.state = {
-      open: true,
+      open: false,
     }
   }
   displayNewRegion() {
-    console.log('display new region')
     this.toggleDrawer(false)
     this.props.setActiveNewRegion()
   }
@@ -40,9 +39,12 @@ class Configs extends React.Component<any, any>{
   render() {
     const { classes } = this.props;
     const newRegion = "New region";
+    let content;
+    if (this.props.global.activeNewRegion) {
+      content = <ConfigsNewRegion />;
+    }
     return (
       <div>
-        {JSON.stringify(this.props.global)} active region
         <SwipeableDrawer
           open={this.state.open}
           onClose={e => this.toggleDrawer(false)}
@@ -58,6 +60,7 @@ class Configs extends React.Component<any, any>{
             </ListItem>
           </List>
         </SwipeableDrawer>
+        {content}
         <Fab
           onClick={e => this.toggleDrawer(true)}
           size="small"
