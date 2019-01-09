@@ -10,7 +10,7 @@ import { setInactiveNewRegion } from '../../actions/globalActions';
 import { ReducersConfigInterface } from '../../reducers/configs';
 
 interface DispatchProps {
-  setInactiveNewRegion?: () => void;
+  setInactiveNewRegion: () => void;
 }
 
 type Props = DispatchProps & ReducersConfigInterface;
@@ -21,7 +21,7 @@ const ConfigsNewRegion = ({ setInactiveNewRegion, region }: Props) => (
       New region configuration
       <CloseIcon
         style={{ float: 'right', margin: '10px' }}
-        onClick={e => setInactiveNewRegion && setInactiveNewRegion()}
+        onClick={e => setInactiveNewRegion()}
       />
     </Typography>
     Selected region: {region && region.read && region.read.label}
@@ -34,7 +34,7 @@ const mapDispatchToProps = {
   setInactiveNewRegion,
 };
 
-const component = connect(
+const component = connect<ReducersConfigInterface, DispatchProps>(
   mapStateToProps,
   mapDispatchToProps
 )(ConfigsNewRegion)

@@ -6,8 +6,8 @@ import { Provider } from 'react-redux'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/blueGrey';
 import green from '@material-ui/core/colors/green';
+import { AppState } from './reducers';
 import CssBaseline from '@material-ui/core/CssBaseline';
-
 // A theme with custom primary and secondary color.
 // It's optional.
 const theme = createMuiTheme({
@@ -23,7 +23,7 @@ const theme = createMuiTheme({
 import App from './components/App'
 import rootReducer from './reducers'
 
-const store = createStore(rootReducer, {})
+const store = createStore(rootReducer);
 
 render(
   <MuiThemeProvider theme={theme}>

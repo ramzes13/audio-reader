@@ -9,10 +9,11 @@ export interface AppState {
   global: ReducersGlobal,
 }
 
-export default function reducer(state: any, action: Action) {
+export default function reducer(state: AppState | undefined, action: Action) {
+  const localState = state ? state : {} as AppState;
   return {
-    configs: configs(state.configs, action, state),
-    reading: reading(state.reading, action),
-    global: global(state.global, action),
+    configs: configs(localState.configs, action, localState),
+    reading: reading(localState.reading, action),
+    global: global(localState.global, action),
   };
 }
