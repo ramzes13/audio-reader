@@ -1,11 +1,14 @@
 import { actions } from '../actions/globalActions';
+import { RegionsInterface } from '../index.t';
 
 export interface ReducersGlobal {
   activeNewRegion: boolean;
+  regions: RegionsInterface
 }
 
 const defaultState: ReducersGlobal = {
-  activeNewRegion: true
+  activeNewRegion: true,
+  regions: []
 }
 
 const configs = (state: ReducersGlobal = defaultState, action: any): ReducersGlobal => {

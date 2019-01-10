@@ -22,7 +22,7 @@ const ConfigsNewRegion = ({ setInactiveNewRegion, region }: Props) => (
     <Typography variant="h5" component="h3">
       New region configuration
     </Typography>
-    Selected region: {region && region.read && region.read.label}
+    Selected region: {region && region.readMeta && region.readMeta.label}
     <Grid
       container
       direction="row"

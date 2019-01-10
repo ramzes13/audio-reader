@@ -3,23 +3,16 @@ import { AnyAction } from 'redux'
 import { actions } from '../actions/configActions';
 import { actions as readActions } from '../actions/readingActions';
 import { AppState } from './index';
-
-export interface RegionReadMeta {
-  cfiRange: any,
-  label: string
-}
+import { RegionMetaInterface } from '../index.t';
 
 export interface ReducersConfigInterface {
   active?: boolean;
-  region?: {
-    read?: RegionReadMeta,
-    audio?: any
-  }
+  region?: RegionMetaInterface
 }
 
 const defaultState: ReducersConfigInterface = {
   active: false,
-  region: {}
+  region: {} as RegionMetaInterface
 }
 
 const configs = (state: ReducersConfigInterface = defaultState, action: AnyAction, globalState: AppState): ReducersConfigInterface => {
@@ -28,7 +21,7 @@ const configs = (state: ReducersConfigInterface = defaultState, action: AnyActio
       return { ...state, active: !state.active };
     case readActions.READ_SELECT:
       if (globalState.global.activeNewRegion) {
-        const region = Object.assign({}, state.region, { read: action.selectionMeta })
+        const region = Object.assign({}, state.region, { readMeta: action.selectionMeta })
         return { ...state, region }
       }
       return { ...state, active: !state.active };

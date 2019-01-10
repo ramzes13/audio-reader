@@ -1,6 +1,6 @@
 import { Action, AnyAction } from 'redux'
 
-import { RegionReadMeta } from '../reducers/configs';
+import { RegionReadMeta } from '../index.t';
 
 export const actions = {
   READ_TOGGLE: 'READ_TOGGLE',
