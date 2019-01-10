@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 import { setInactiveNewRegion } from '../../actions/globalActions';
 import { ReducersConfigInterface } from '../../reducers/configs';
@@ -19,12 +21,28 @@ const ConfigsNewRegion = ({ setInactiveNewRegion, region }: Props) => (
   <Paper elevation={0}>
     <Typography variant="h5" component="h3">
       New region configuration
-      <CloseIcon
-        style={{ float: 'right', margin: '10px' }}
-        onClick={e => setInactiveNewRegion()}
-      />
     </Typography>
     Selected region: {region && region.read && region.read.label}
+    <Grid
+      container
+      direction="row"
+      justify="space-between"
+      alignItems="flex-start"
+    >
+      <Button
+        variant="outlined"
+        size="small"
+        onClick={e => setInactiveNewRegion()}
+      >
+        Close
+      </Button>
+      <Button
+        variant="outlined"
+        size="small"
+      >
+        Save
+      </Button>
+    </Grid>
   </Paper>
 )
 
