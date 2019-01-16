@@ -2,16 +2,21 @@ export default {
   configs: {
     region: {
       readMeta: {
-        cfiRange: 'epubcfi(/6/24[chap-1]!/4/2/16,/1:0,/3:102)',
-        label: 'The eldest of ... age at thirty-three.'
+        cfiRange: 'epubcfi(/6/24[chap-1]!/4/2,/10/1:0,/12/1:0)',
+        label: 'Bilbo was very ... (reputedly) inexhaustible wealth.'
       }
     }
   },
   reading: {
-    active: true
+    active: true,
+    selectedRegion: null,
+    annotationType: 'highlight'
   },
   global: {
-    activeNewRegion: true,
+    activeNewRegion: true
+  },
+  regions: {
+    active: true,
     regions: [
       {
         readMeta: {
@@ -21,26 +26,8 @@ export default {
       },
       {
         readMeta: {
-          cfiRange: 'epubcfi(/6/24[chap-1]!/4/2/10,/1:0,/5:246)',
+          cfiRange: 'epubcfi(/6/24[chap-1]!/4/2,/10/1:0,/12/1:0)',
           label: 'Bilbo was very ... (reputedly) inexhaustible wealth.'
-        }
-      },
-      {
-        readMeta: {
-          cfiRange: 'epubcfi(/6/24[chap-1]!/4/2/12,/1:0,/1:90)',
-          label: '‘It will have ... come of it!’'
-        }
-      },
-      {
-        readMeta: {
-          cfiRange: 'epubcfi(/6/24[chap-1]!/4/2/14,/1:0,/1:443)',
-          label: 'But so far ... to grow up.'
-        }
-      },
-      {
-        readMeta: {
-          cfiRange: 'epubcfi(/6/24[chap-1]!/4/2/16,/1:0,/3:102)',
-          label: 'The eldest of ... age at thirty-three.'
         }
       }
     ]

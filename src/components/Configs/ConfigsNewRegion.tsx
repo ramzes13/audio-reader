@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { setInactiveNewRegion, addRegion } from '../../actions/globalActions';
+import { setInactiveNewRegion } from '../../actions/globalActions';
+import { addRegion } from '../../actions/regionsActions';
 import { ReducersConfigInterface } from '../../reducers/configs';
 import { RegionMetaInterface } from '../../index.t';
 

@@ -1,7 +1,7 @@
 import { actions } from '../actions/readingActions';
 
 export interface ReducersReadingStore {
-  active?: boolean;
+  active: boolean;
   selectedRegion?: any,
   annotationType?: string,
 }
@@ -15,7 +15,7 @@ const defaultState: ReducersReadingStore = {
 const configs = (state: any = defaultState, action: any) => {
   switch (action.type) {
     case actions.READ_TOGGLE:
-      return { active: !state.active };
+      return { ...state, active: !state.active };
     default:
       return state
   }
