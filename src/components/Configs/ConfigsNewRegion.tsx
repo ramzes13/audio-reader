@@ -1,23 +1,23 @@
 import React from 'react'
-
 import { connect } from 'react-redux'
+
+import { setInactiveNewRegion, addRegion } from '../../actions/globalActions';
+import { ReducersConfigInterface } from '../../reducers/configs';
+import { RegionMetaInterface } from '../../index.t';
 
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import CloseIcon from '@material-ui/icons/Close';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
-import { setInactiveNewRegion } from '../../actions/globalActions';
-import { ReducersConfigInterface } from '../../reducers/configs';
-
 interface DispatchProps {
   setInactiveNewRegion: () => void;
+  addRegion: (region: RegionMetaInterface) => void;
 }
 
 type Props = DispatchProps & ReducersConfigInterface;
 
-const ConfigsNewRegion = ({ setInactiveNewRegion, region }: Props) => (
+const ConfigsNewRegion = ({ setInactiveNewRegion, region, addRegion }: Props) => (
   <Paper elevation={0}>
     <Typography variant="h5" component="h3">
       New region configuration
@@ -39,6 +39,7 @@ const ConfigsNewRegion = ({ setInactiveNewRegion, region }: Props) => (
       <Button
         variant="outlined"
         size="small"
+        onClick={e => handleAddNewRegion(region, addRegion)}
       >
         Save
       </Button>
@@ -50,6 +51,7 @@ const mapStateToProps = (state: any): any => ({ ...state.configs, global: state.
 
 const mapDispatchToProps = {
   setInactiveNewRegion,
+  addRegion,
 };
 
 const component = connect<ReducersConfigInterface, DispatchProps>(
@@ -57,4 +59,11 @@ const component = connect<ReducersConfigInterface, DispatchProps>(
   mapDispatchToProps
 )(ConfigsNewRegion)
 
+function handleAddNewRegion(regionData: any, addRegion: any) {
+  //todo some validations 
+  const finalData: RegionMetaInterface = {
+    readMeta: regionData.readMeta
+  }
+  addRegion(finalData);
+}
 export default component;

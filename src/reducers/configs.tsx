@@ -11,7 +11,6 @@ export interface ReducersConfigInterface {
 }
 
 const defaultState: ReducersConfigInterface = {
-  active: false,
   region: {} as RegionMetaInterface
 }
 
