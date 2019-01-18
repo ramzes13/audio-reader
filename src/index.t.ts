@@ -4,7 +4,8 @@ export interface RegionReadMeta {
 }
 
 export interface RegionMetaInterface {
-  readMeta: RegionReadMeta
+  readMeta: RegionReadMeta,
+  id: string | null,
 }
 
 export interface RegionsInterface extends Array<RegionMetaInterface> { }

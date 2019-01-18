@@ -6,5 +6,6 @@ export interface ReducersGlobal {
 
 export interface ReducersRegionsRegions {
   active: boolean,
+  selectedRegionId: string | null,
   regions: RegionsInterface,
 }

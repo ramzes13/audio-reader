@@ -6,7 +6,7 @@ type Props = {
   region: RegionMetaInterface,
   regionClick: (data: RegionMetaInterface) => void;
 };
-const Region = ({ region, regionClick }: Props) => (
+const Region = ({ region, regionClick }: Props, state: any) => (
   <div onClick={(e => regionClick(region))}>
     {JSON.stringify(region)}
   </div>

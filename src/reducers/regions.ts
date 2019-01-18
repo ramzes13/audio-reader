@@ -3,6 +3,7 @@ import { ReducersRegionsRegions } from './index.t';
 
 const defaultState: ReducersRegionsRegions = {
   active: true,
+  selectedRegionId: null,
   regions: []
 }
 

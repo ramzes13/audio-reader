@@ -19,12 +19,14 @@ export default {
     active: true,
     regions: [
       {
+        id: '1',
         readMeta: {
           cfiRange: 'epubcfi(/6/24[chap-1]!/4/2,/8/1:0,/10/1:0)',
           label: 'When Mr. Bilbo ... excitement in Hobbiton.'
         }
       },
       {
+        id: '2',
         readMeta: {
           cfiRange: 'epubcfi(/6/24[chap-1]!/4/2,/10/1:0,/12/1:0)',
           label: 'Bilbo was very ... (reputedly) inexhaustible wealth.'
