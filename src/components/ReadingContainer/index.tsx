@@ -8,7 +8,7 @@ import { ReducersReadingStore } from '../../reducers/reading';
 import { RegionReadMeta } from '../../index.t';
 
 import UiGenericContainer from '../../ui/GenericComponent';
-import './ReadingContainer.css';
+import './styles.css';
 
 interface DispatchProps {
   toggleActive: () => void;
