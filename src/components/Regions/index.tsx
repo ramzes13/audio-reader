@@ -4,20 +4,27 @@ import { connect } from 'react-redux'
 import Region from './Region'
 import { ReducersGlobal, ReducersRegionsRegions } from '../../reducers/index.t'
 import { RegionMetaInterface } from '../../index.t';
-import { toggleActive } from '../../actions/regionsActions'
+import { toggleActive, regionSelected } from '../../actions/regionsActions'
 
 import UiGenericContainer from '../../ui/GenericComponent'
 
 interface DispatchProps {
   toggleActive: () => void;
+  regionSelected: (region: RegionMetaInterface) => void;
 }
 
 type State = ReducersGlobal & ReducersRegionsRegions;
 type Props = ReducersGlobal & ReducersRegionsRegions & DispatchProps;
 
 class Regions extends React.Component<Props, any> {
+  constructor(props: Props) {
+    super(props);
+    this.regionClick = this.regionClick.bind(this);
+  }
+
   regionClick(region: RegionMetaInterface) {
     console.log('region click', region);
+    this.props.regionSelected(region);
   }
   render() {
     const selectedRegionId = this.props.selectedRegionId;
@@ -38,6 +45,7 @@ const mapStateToProps = (state: any): State => ({ ...state.global, ...state.regi
 
 const mapDispatchToProps = {
   toggleActive,
+  regionSelected,
 };
 
 export default connect<State, DispatchProps>(

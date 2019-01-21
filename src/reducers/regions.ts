@@ -11,7 +11,8 @@ const configs = (state: ReducersRegionsRegions = defaultState, action: any): Red
   switch (action.type) {
     case actions.REG_TOGGLE:
       return { ...state, active: !state.active };
-
+    case actions.REG_SELECT:
+      return { ...state, selectedRegionId: action.region.id };
     case actions.REG_ADD_REGION:
       return {
         ...state,
