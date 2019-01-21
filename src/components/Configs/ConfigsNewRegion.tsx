@@ -60,10 +60,15 @@ const component = connect<ReducersConfigInterface, DispatchProps>(
   mapDispatchToProps
 )(ConfigsNewRegion)
 
-function handleAddNewRegion(regionData: any, addRegion: any) {
+function handleAddNewRegion(regionData: RegionMetaInterface | undefined, addRegion: any) {
   //todo some validations 
+  if (!regionData) {
+    return;
+  }
+
   const finalData: RegionMetaInterface = {
-    readMeta: regionData.readMeta
+    readMeta: regionData.readMeta,
+    id: '_' + Math.random().toString(36).substr(2, 9),
   }
   addRegion(finalData);
 }

@@ -153,6 +153,7 @@ class ReadingContainer extends React.Component<Props, any> {
   }
 }
 
+
 const mapStateToProps = (state: any): ReducersReadingStore => ({ ...state.reading })
 
 const mapDispatchToProps = {
