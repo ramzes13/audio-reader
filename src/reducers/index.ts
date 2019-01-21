@@ -1,9 +1,14 @@
 import { Action } from 'redux'
-import configs, { ReducersConfigInterface } from './configs'
-import reading, { ReducersReadingStore } from './reading'
+import configs from './configs'
+import reading from './reading'
 import global from './global'
 import regions from './regions'
-import { ReducersGlobal, ReducersRegionsRegions } from './index.t';
+import {
+  ReducersGlobal,
+  ReducersRegionsRegions,
+  ReducersReadingStore,
+  ReducersConfigInterface,
+} from './index.t';
 
 export interface AppState {
   configs: ReducersConfigInterface,

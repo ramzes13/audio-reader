@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { setInactiveNewRegion } from '../../actions/globalActions';
 import { addRegion } from '../../actions/regionsActions';
-import { ReducersConfigInterface } from '../../reducers/configs';
+import { ReducersConfigInterface } from '../../reducers/index.t';
 import { RegionMetaInterface } from '../../index.t';
 
 import Paper from '@material-ui/core/Paper';

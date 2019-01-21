@@ -1,10 +1,6 @@
 import { actions } from '../actions/readingActions';
 
-export interface ReducersReadingStore {
-  active: boolean;
-  selectedRegion?: any,
-  annotationType?: string,
-}
+import { ReducersReadingStore } from './index.t';
 
 const defaultState: ReducersReadingStore = {
   active: false,

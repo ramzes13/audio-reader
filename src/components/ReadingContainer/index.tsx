@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import ePub from 'epubjs';
 
 import { toggleActive, onSelect } from '../../actions/readingActions';
-import { ReducersReadingStore } from '../../reducers/reading';
+import { ReducersReadingStore } from '../../reducers/index.t';
 import { RegionReadMeta } from '../../index.t';
 
 import UiGenericContainer from '../../ui/GenericComponent';

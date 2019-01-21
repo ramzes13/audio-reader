@@ -11,7 +11,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import { ReducersConfigInterface } from '../../reducers/configs';
+import { ReducersConfigInterface } from '../../reducers/index.t';
 import { toggleActive } from '../../actions/configActions';
 import { setActiveNewRegion } from '../../actions/globalActions';
 import styles from './styles';

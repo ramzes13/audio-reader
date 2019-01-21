@@ -4,11 +4,7 @@ import { actions } from '../actions/configActions';
 import { actions as readActions } from '../actions/readingActions';
 import { AppState } from './index';
 import { RegionMetaInterface } from '../index.t';
-
-export interface ReducersConfigInterface {
-  active?: boolean;
-  region?: RegionMetaInterface
-}
+import { ReducersConfigInterface } from './index.t';
 
 const defaultState: ReducersConfigInterface = {
   region: {} as RegionMetaInterface
