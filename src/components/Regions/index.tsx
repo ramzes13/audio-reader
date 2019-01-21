@@ -20,10 +20,14 @@ class Regions extends React.Component<Props, any> {
     console.log('region click', region);
   }
   render() {
+    const selectedRegionId = this.props.selectedRegionId;
+
     return (
       <UiGenericContainer active={this.props.active} toggleActive={this.props.toggleActive}>
         {this.props.regions.map((region, i) => {
-          return (<Region key={i} region={region} regionClick={this.regionClick} />)
+          const selected = region.id === selectedRegionId;
+
+          return (<Region key={region.id} selected={selected} region={region} regionClick={this.regionClick} />)
         })}
       </UiGenericContainer>
     )

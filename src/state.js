@@ -17,6 +17,7 @@ export default {
   },
   regions: {
     active: true,
+    selectedRegionId: '1',
     regions: [
       {
         id: '1',
