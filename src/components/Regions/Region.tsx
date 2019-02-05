@@ -4,15 +4,16 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
 import { RegionMetaInterface } from '../../index.t';
+import { actions } from './index.t'
 
 type Props = {
   region: RegionMetaInterface,
   selected: boolean,
-  regionClick: (data: RegionMetaInterface) => void;
+  regionAction: (action: actions, data: RegionMetaInterface) => void;
 };
-const Region = ({ region, regionClick, selected }: Props, state: any) => (
+const Region = ({ region, regionAction: regionAction, selected }: Props, state: any) => (
   <Grid
-    onClick={(e => regionClick(region))}
+    onClick={(e => regionAction('select', region))}
     container
     direction="row"
     justify="space-between"
@@ -21,8 +22,8 @@ const Region = ({ region, regionClick, selected }: Props, state: any) => (
     {region.readMeta.label}
     {selected ?
       <div>
-        <Button variant="outlined" size="small">Edit</Button>
-        <Button variant="outlined" size="small">Train</Button>
+        <Button variant="outlined" size="small" onClick={(e => regionAction('edit', region))}>Edit</Button>
+        <Button variant="outlined" size="small" onClick={(e => regionAction('train', region))}>Train</Button>
       </div>
       : ''}
   </Grid>

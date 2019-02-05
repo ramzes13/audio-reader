@@ -2,15 +2,18 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import Region from './Region'
+import { toggleActive, regionSelected, regionEdit } from '../../actions/regionsActions'
+
 import { ReducersGlobal, ReducersRegionsRegions } from '../../reducers/index.t'
-import { RegionMetaInterface } from '../../index.t';
-import { toggleActive, regionSelected } from '../../actions/regionsActions'
+import { RegionMetaInterface } from '../../index.t'
+import { actions } from './index.t'
 
 import UiGenericContainer from '../../ui/GenericComponent'
 
 interface DispatchProps {
   toggleActive: () => void;
   regionSelected: (region: RegionMetaInterface) => void;
+  regionEdit: (region: RegionMetaInterface) => void;
 }
 
 type State = ReducersGlobal & ReducersRegionsRegions;
@@ -19,12 +22,22 @@ type Props = ReducersGlobal & ReducersRegionsRegions & DispatchProps;
 class Regions extends React.Component<Props, any> {
   constructor(props: Props) {
     super(props);
-    this.regionClick = this.regionClick.bind(this);
+    this.regionAction = this.regionAction.bind(this);
   }
 
-  regionClick(region: RegionMetaInterface) {
+  regionAction(action: actions, region: RegionMetaInterface) {
     console.log('region click', region);
-    this.props.regionSelected(region);
+    switch (action) {
+      case 'select':
+        this.props.regionSelected(region);
+        break;
+      case 'edit':
+        this.props.regionEdit(region);
+        break;
+      case 'train':
+        break;
+    }
+
   }
   render() {
     const selectedRegionId = this.props.selectedRegionId;
@@ -34,7 +47,7 @@ class Regions extends React.Component<Props, any> {
         {this.props.regions.map((region, i) => {
           const selected = region.id === selectedRegionId;
 
-          return (<Region key={region.id} selected={selected} region={region} regionClick={this.regionClick} />)
+          return (<Region key={region.id} selected={selected} region={region} regionAction={this.regionAction} />)
         })}
       </UiGenericContainer>
     )
@@ -46,6 +59,7 @@ const mapStateToProps = (state: any): State => ({ ...state.global, ...state.regi
 const mapDispatchToProps = {
   toggleActive,
   regionSelected,
+  regionEdit,
 };
 
 export default connect<State, DispatchProps>(

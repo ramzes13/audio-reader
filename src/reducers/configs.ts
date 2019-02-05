@@ -2,6 +2,7 @@ import { AnyAction } from 'redux'
 
 import { actions } from '../actions/configActions';
 import { actions as readActions } from '../actions/readingActions';
+import { actions as regionsActions, RegionAction } from '../actions/regionsActions';
 import { AppState } from './index';
 import { RegionMetaInterface } from '../index.t';
 import { ReducersConfigInterface } from './index.t';
@@ -19,7 +20,11 @@ const configs = (state: ReducersConfigInterface = defaultState, action: AnyActio
         const region = Object.assign({}, state.region, { readMeta: action.selectionMeta })
         return { ...state, region }
       }
-      return { ...state, active: !state.active };
+      return state
+    case regionsActions.REG_EDIT:
+      const regSelectAction = <RegionAction>action;
+      const { region } = regSelectAction;
+      return { ...state, region }
     default:
       return state
   }
