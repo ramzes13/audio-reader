@@ -15,7 +15,7 @@ import { ReducersConfigInterface } from '../../reducers/index.t';
 import { toggleActive } from '../../actions/configActions';
 import { setActiveNewRegion } from '../../actions/globalActions';
 import styles from './styles';
-import ConfigsNewRegion from './ConfigsNewRegion';
+import ConfigsRegion from './ConfigsRegion';
 
 interface DispatchProps {
   toggleActive: () => void;
@@ -41,7 +41,7 @@ class Configs extends React.Component<any, any>{
     const newRegion = "New region";
     let content;
     if (this.props.global.activeNewRegion) {
-      content = <ConfigsNewRegion />;
+      content = <ConfigsRegion />;
     }
     return (
       <div>

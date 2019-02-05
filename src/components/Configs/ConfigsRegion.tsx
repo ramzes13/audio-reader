@@ -18,7 +18,7 @@ interface DispatchProps {
 
 type Props = DispatchProps & ReducersConfigInterface;
 
-const ConfigsNewRegion = ({ setInactiveNewRegion, region, addRegion }: Props) => (
+const ConfigsRegion = ({ setInactiveNewRegion, region, addRegion }: Props) => (
   <Paper elevation={0}>
     <Typography variant="h5" component="h3">
       New region configuration
@@ -58,7 +58,7 @@ const mapDispatchToProps = {
 const component = connect<ReducersConfigInterface, DispatchProps>(
   mapStateToProps,
   mapDispatchToProps
-)(ConfigsNewRegion)
+)(ConfigsRegion)
 
 function handleAddNewRegion(regionData: RegionMetaInterface | undefined, addRegion: any) {
   //todo some validations 
