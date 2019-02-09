@@ -12,6 +12,8 @@ const configs = (state: any = defaultState, action: any) => {
   switch (action.type) {
     case actions.READ_TOGGLE:
       return { ...state, active: !state.active };
+    case actions.READ_CF_SELECT:
+      return { ...state, active: !state.active };
     default:
       return state
   }

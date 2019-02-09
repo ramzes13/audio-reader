@@ -1,8 +1,10 @@
-import { Action } from 'redux'
+import { Action, combineReducers } from 'redux'
+
 import configs from './configs'
 import reading from './reading'
 import global from './global'
 import regions from './regions'
+
 import {
   ReducersGlobal,
   ReducersRegionsRegions,
@@ -17,12 +19,9 @@ export interface AppState {
   regions: ReducersRegionsRegions,
 }
 
-export default function reducer(state: AppState | undefined, action: Action) {
-  const localState = state ? state : {} as AppState;
-  return {
-    configs: configs(localState.configs, action, localState),
-    reading: reading(localState.reading, action),
-    global: global(localState.global, action),
-    regions: regions(localState.regions, action),
-  };
-}
+export default combineReducers<AppState>({
+  reading,
+  configs,
+  global,
+  regions
+})

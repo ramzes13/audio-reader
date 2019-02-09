@@ -5,6 +5,7 @@ import { RegionReadMeta } from '../index.t';
 export const actions = {
   READ_TOGGLE: 'READ_TOGGLE',
   READ_SELECT: 'READ_SELECT',
+  READ_CF_SELECT: 'READ_CF_SELECT',
 }
 
 export function toggleActive(): Action {
