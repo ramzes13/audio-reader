@@ -33,7 +33,7 @@ class Configs extends React.Component<any, any>{
     this.toggleDrawer(false)
     this.props.setActiveNewRegion()
   }
-  toggleDrawer(open: any) {
+  toggleDrawer(open: boolean) {
     this.setState({ open });
   }
   render() {

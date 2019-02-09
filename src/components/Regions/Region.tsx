@@ -11,22 +11,34 @@ type Props = {
   selected: boolean,
   regionAction: (action: actions, data: RegionMetaInterface) => void;
 };
-const Region = ({ region, regionAction: regionAction, selected }: Props, state: any) => (
-  <Grid
-    onClick={(e => regionAction('select', region))}
-    container
-    direction="row"
-    justify="space-between"
-    alignItems="flex-start"
-  >
-    {region.readMeta.label}
-    {selected ?
-      <div>
-        <Button variant="outlined" size="small" onClick={(e => regionAction('edit', region))}>Edit</Button>
-        <Button variant="outlined" size="small" onClick={(e => regionAction('train', region))}>Train</Button>
-      </div>
-      : ''}
-  </Grid>
-);
+
+class Region extends React.Component<Props, any> {
+
+  handleClick(e: React.MouseEvent<HTMLElement>, action: actions, region: RegionMetaInterface) {
+    e.stopPropagation();
+    this.props.regionAction(action, region);
+  }
+
+  render() {
+    const { region, regionAction: regionAction, selected } = this.props;
+    return (
+      <Grid
+        onClick={(e => this.handleClick(e, 'select', region))}
+        container
+        direction="row"
+        justify="space-between"
+        alignItems="flex-start"
+      >
+        {region.readMeta.label}
+        {selected ?
+          <div>
+            <Button variant="outlined" size="small" onClick={(e => this.handleClick(e, 'edit', region))}>Edit</Button>
+            <Button variant="outlined" size="small" onClick={(e => this.handleClick(e, 'train', region))}>Train</Button>
+          </div>
+          : ''}
+      </Grid>
+    )
+  }
+}
 
 export default Region;

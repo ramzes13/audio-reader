@@ -81,6 +81,14 @@ class ReadingContainer extends React.Component<Props, any> {
       // console.log({ location });
     });
 
+    this.rendition.themes.default({
+      '::selection': {
+        'background': 'rgba(255,255,0, 0.3)'
+      },
+      '.epubjs-hl': {
+        'fill': 'yellow', 'fill-opacity': '0.3', 'mix-blend-mode': 'multiply'
+      }
+    });
     this.rendition.on("selected", (cfiRange: any, contents: any) => {
 
       this.prepareMeta(cfiRange);
@@ -90,12 +98,13 @@ class ReadingContainer extends React.Component<Props, any> {
       //   }
       // });
       // console.log(this.rendition.annotations)
-      // this.rendition.annotations.add(this.props.annotationType, cfiRange, {}, (e) => {
-      //   console.log("this.rendition.annotations", this.rendition.annotations);
-      //   console.log({ cfiRange });
-      // });
 
-      // this.rendition.annotations.mark(cfiRange, {}, (e) => {
+      this.rendition.annotations.add(this.props.annotationType, cfiRange, {}, (e: any) => {
+        console.log("this.rendition.annotations", this.rendition.annotations);
+        console.log({ cfiRange });
+      });
+
+      // this.rendition.annotations.mark(cfiRange, {}, (e: any) => {
       //   console.log("this.rendition.annotations", this.rendition.annotations);
       //   console.log({ cfiRange });
       // });
