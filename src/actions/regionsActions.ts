@@ -1,6 +1,7 @@
 import { Action, AnyAction } from 'redux'
 
 import { RegionMetaInterface } from '../index.t';
+import { actions as globalActions } from './globalActions';
 
 export const actions = {
   REG_TOGGLE: 'REG_TOGGLE',
@@ -25,6 +26,9 @@ export function regionSelected(region: RegionMetaInterface): RegionAction {
   return { type: actions.REG_SELECT, region };
 }
 
-export function regionEdit(region: RegionMetaInterface): RegionAction {
-  return { type: actions.REG_EDIT, region };
+export function regionEdit(region: RegionMetaInterface) {
+  return (dispatch: any, getState: any) => {
+    dispatch({ type: globalActions.GLOBAL_ACTIVATE_NEW_REGION });
+    dispatch({ type: actions.REG_EDIT, region });
+  }
 }
