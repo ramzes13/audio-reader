@@ -74,11 +74,11 @@ class ReadingContainer extends React.Component<Props, any> {
     var displayed = this.rendition.display(11);
 
     this.rendition.on("layout", function (layout: any) {
-      // console.log({ layout })
+      console.log('layout', { layout });
     });
 
     this.rendition.on("relocated", function (location: any) {
-      // console.log({ location });
+      console.log('relocated', { location });
     });
 
     this.rendition.themes.default({
@@ -99,10 +99,10 @@ class ReadingContainer extends React.Component<Props, any> {
       // });
       // console.log(this.rendition.annotations)
 
-      this.rendition.annotations.add(this.props.annotationType, cfiRange, {}, (e: any) => {
-        console.log("this.rendition.annotations", this.rendition.annotations);
-        console.log({ cfiRange });
-      });
+      // this.rendition.annotations.add(this.props.annotationType, cfiRange, {}, (e: any) => {
+      //   console.log("this.rendition.annotations", this.rendition.annotations);
+      //   console.log({ cfiRange });
+      // });
 
       // this.rendition.annotations.mark(cfiRange, {}, (e: any) => {
       //   console.log("this.rendition.annotations", this.rendition.annotations);
@@ -151,7 +151,31 @@ class ReadingContainer extends React.Component<Props, any> {
   // return false;
   // }
 
+  clearAnnotations() {
+    const _this = this;
+
+    Object.keys(_this.rendition.annotations._annotations).forEach(key => {
+      const annotation = _this.rendition.annotations._annotations[key];
+      _this.rendition.annotations.remove(annotation.cfiRange, _this.props.annotationType);
+    })
+  }
+  handleSelectedRegion() {
+    if (this.props.selectedRegion) {
+      console.log(this.props.selectedRegion)
+      const { cfiRange } = this.props.selectedRegion;
+
+      this.clearAnnotations();
+      this.rendition.annotations.add(this.props.annotationType, cfiRange, {}, (e: any) => {
+        console.log("this.rendition.annotations", this.rendition.annotations);
+        console.log({ cfiRange });
+      });
+    }
+  }
+
   render() {
+    this.handleSelectedRegion();
+
+    console.log(this.props.selectedRegion);
     return (
       <UiGenericContainer active={this.props.active} toggleActive={this.props.toggleActive}>
         <div id="epub-reading-container" className=""></div>

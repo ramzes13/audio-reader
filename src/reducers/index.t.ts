@@ -1,4 +1,8 @@
-import { RegionsInterface, RegionMetaInterface } from '../index.t';
+import {
+  RegionsInterface,
+  RegionMetaInterface,
+  RegionReadMeta
+} from '../index.t';
 
 export interface ReducersGlobal {
   activeNewRegion: boolean;
@@ -12,7 +16,7 @@ export interface ReducersRegionsRegions {
 
 export interface ReducersReadingStore {
   active: boolean;
-  selectedRegion?: any,
+  selectedRegion: RegionReadMeta | null,
   annotationType?: string,
 }
 

@@ -1,4 +1,5 @@
 import { actions } from '../actions/readingActions';
+import { actions as regionsActions, RegionAction } from '../actions/regionsActions';
 
 import { ReducersReadingStore } from './index.t';
 
@@ -12,8 +13,9 @@ const configs = (state: any = defaultState, action: any) => {
   switch (action.type) {
     case actions.READ_TOGGLE:
       return { ...state, active: !state.active };
-    case actions.READ_CF_SELECT:
-      return { ...state, active: !state.active };
+    case regionsActions.REG_EDIT:
+      const regSelectAction = <RegionAction>action;
+      return { ...state, selectedRegion: regSelectAction.region.readMeta }
     default:
       return state
   }
