@@ -25,16 +25,15 @@ const theme = createMuiTheme({
 
 import App from './components/App'
 import rootReducer from './reducers'
+const midlewares = [applyMiddleware(thunk)];
+if ((window as any).__REDUX_DEVTOOLS_EXTENSION__) {
+  midlewares.push((window as any).__REDUX_DEVTOOLS_EXTENSION__());
+}
 /* eslint-disable no-underscore-dangle */
 const store = createStore(
   rootReducer,
   state as any,
-  compose(
-    applyMiddleware(thunk),
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__()
-  )
-
+  compose(...midlewares)
 );
 /* eslint-enable */
 render(
