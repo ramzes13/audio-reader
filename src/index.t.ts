@@ -1,6 +1,7 @@
 export interface RegionReadMeta {
   cfiRange: any,
-  label: string
+  label: string,
+  fullText: string,
 }
 
 export interface RegionMetaInterface {

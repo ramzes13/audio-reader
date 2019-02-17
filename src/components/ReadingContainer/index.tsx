@@ -33,13 +33,14 @@ class ReadingContainer extends React.Component<Props, any> {
   prepareMeta(cfiRange: any) {
     this.book.getRange(cfiRange).then((range: any) => {
       if (range) {
-        let label = range.toString().trim();
+        const fullText = range.toString().trim();
+        let label = fullText;
         const selectedTxt = label.split(' ');
         if (selectedTxt.length > 6) {
           label = `${selectedTxt.slice(0, 3).join(' ')} ... ${selectedTxt.slice(-3).join(' ')}`;
         }
 
-        this.props.onSelect({ cfiRange, label });
+        this.props.onSelect({ cfiRange, label, fullText });
       }
     });
   }
