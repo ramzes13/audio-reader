@@ -62,6 +62,7 @@ export function beginCreateNewRegion() {
   console.log('cancelRegionEdit')
   return (dispatch: any, getState: any) => {
     dispatch(setActiveNewRegion());
+    dispatch(removeReadingSelection());
     dispatch({ type: actions.REG_CREATE_NEW_REGION });
   }
 }
