@@ -22,5 +22,5 @@ export interface ReducersReadingStore {
 
 export interface ReducersConfigInterface {
   active?: boolean;
-  region?: RegionMetaInterface
+  region: RegionMetaInterface
 }

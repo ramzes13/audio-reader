@@ -1,8 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { setInactiveNewRegion } from '../../actions/globalActions';
-import { addRegion } from '../../actions/regionsActions';
+import { handleSaveRegion, cancelRegionEdit } from '../../actions/regionsActions';
 import { ReducersConfigInterface } from '../../reducers/index.t';
 import { RegionMetaInterface } from '../../index.t';
 
@@ -12,16 +11,16 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
 interface DispatchProps {
-  setInactiveNewRegion: () => void;
-  addRegion: (region: RegionMetaInterface) => void;
+  cancelRegionEdit: () => void;
+  handleSaveRegion: (region: RegionMetaInterface) => void;
 }
 
 type Props = DispatchProps & ReducersConfigInterface;
 
-const ConfigsRegion = ({ setInactiveNewRegion, region, addRegion }: Props) => (
+const ConfigsRegion = ({ cancelRegionEdit, region, handleSaveRegion }: Props) => (
   <Paper elevation={0}>
     <Typography variant="h5" component="h3">
-      New region configuration
+      {region.id ? `Edit region ${region.id}` : 'New region configuration'}
     </Typography>
     Selected region: {region && region.readMeta && region.readMeta.label}
     <Grid
@@ -33,14 +32,14 @@ const ConfigsRegion = ({ setInactiveNewRegion, region, addRegion }: Props) => (
       <Button
         variant="outlined"
         size="small"
-        onClick={e => setInactiveNewRegion()}
+        onClick={e => cancelRegionEdit()}
       >
         Close
       </Button>
       <Button
         variant="outlined"
         size="small"
-        onClick={e => handleAddNewRegion(region, addRegion)}
+        onClick={e => handleAddNewRegion(region, handleSaveRegion)}
       >
         Save
       </Button>
@@ -51,8 +50,8 @@ const ConfigsRegion = ({ setInactiveNewRegion, region, addRegion }: Props) => (
 const mapStateToProps = (state: any): any => ({ ...state.configs, global: state.global })
 
 const mapDispatchToProps = {
-  setInactiveNewRegion,
-  addRegion,
+  handleSaveRegion,
+  cancelRegionEdit,
 };
 
 const component = connect<ReducersConfigInterface, DispatchProps>(
@@ -60,16 +59,12 @@ const component = connect<ReducersConfigInterface, DispatchProps>(
   mapDispatchToProps
 )(ConfigsRegion)
 
-function handleAddNewRegion(regionData: RegionMetaInterface | undefined, addRegion: any) {
+function handleAddNewRegion(regionData: RegionMetaInterface, handleSaveRegion: any) {
   //todo some validations 
   if (!regionData) {
     return;
   }
 
-  const finalData: RegionMetaInterface = {
-    readMeta: regionData.readMeta,
-    id: '_' + Math.random().toString(36).substr(2, 9),
-  }
-  addRegion(finalData);
+  handleSaveRegion(regionData);
 }
 export default component;

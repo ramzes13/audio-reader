@@ -1,11 +1,17 @@
 import { Action, AnyAction } from 'redux'
 
 import { RegionMetaInterface } from '../index.t';
-import { actions as globalActions } from './globalActions';
+import { removeReadingSelection } from './readingActions';
+
+import {
+  setInactiveNewRegion,
+  setActiveNewRegion
+} from './globalActions';
 
 export const actions = {
   REG_TOGGLE: 'REG_TOGGLE',
-  REG_ADD_REGION: 'REG_ADD_REGION',
+  REG_SAVE_NEW_REGION: 'REG_SAVE_NEW_REGION',
+  REG_SAVE_REGION: 'REG_SAVE_REGION',
   REG_SELECT: 'REG_SELECT',
   REG_EDIT: 'REG_EDIT',
 }
@@ -18,8 +24,18 @@ export function toggleActive(): Action {
   return { type: actions.REG_TOGGLE };
 }
 
-export function addRegion(region: RegionMetaInterface): RegionAction {
-  return { type: actions.REG_ADD_REGION, region };
+export function handleSaveRegion(region: RegionMetaInterface) {
+  return (dispatch: any) => {
+    //when new region is created
+    if (!region.id) {
+      region.id = '_' + Math.random().toString(36).substr(2, 9);
+      dispatch({ type: actions.REG_SAVE_NEW_REGION, region });
+    } else {
+      dispatch({ type: actions.REG_SAVE_REGION, region });
+    }
+
+    dispatch(removeReadingSelection());
+  }
 }
 
 export function regionSelected(region: RegionMetaInterface): RegionAction {
@@ -27,8 +43,15 @@ export function regionSelected(region: RegionMetaInterface): RegionAction {
 }
 
 export function regionEdit(region: RegionMetaInterface) {
-  return (dispatch: any, getState: any) => {
-    dispatch({ type: globalActions.GLOBAL_ACTIVATE_NEW_REGION });
+  return (dispatch: any) => {
+    dispatch(setActiveNewRegion());
     dispatch({ type: actions.REG_EDIT, region });
+  }
+}
+
+export function cancelRegionEdit() {
+  console.log('cancelRegionEdit')
+  return (dispatch: any, getState: any) => {
+    dispatch(setInactiveNewRegion());
   }
 }

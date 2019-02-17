@@ -153,6 +153,9 @@ class ReadingContainer extends React.Component<Props, any> {
 
   clearAnnotations() {
     const _this = this;
+    if (!_this.rendition) {
+      return;
+    }
 
     Object.keys(_this.rendition.annotations._annotations).forEach(key => {
       const annotation = _this.rendition.annotations._annotations[key];
@@ -160,11 +163,11 @@ class ReadingContainer extends React.Component<Props, any> {
     })
   }
   handleSelectedRegion() {
+    this.clearAnnotations();
     if (this.props.selectedRegion) {
       console.log(this.props.selectedRegion)
       const { cfiRange } = this.props.selectedRegion;
 
-      this.clearAnnotations();
       this.rendition.annotations.add(this.props.annotationType, cfiRange, {}, (e: any) => {
         console.log("this.rendition.annotations", this.rendition.annotations);
         console.log({ cfiRange });

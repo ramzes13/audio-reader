@@ -13,6 +13,8 @@ const configs = (state: any = defaultState, action: any) => {
   switch (action.type) {
     case actions.READ_TOGGLE:
       return { ...state, active: !state.active };
+    case actions.READ_REMOVE_SELECTION:
+      return { ...state, selectedRegion: null };
     case regionsActions.REG_EDIT:
       const regSelectAction = <RegionAction>action;
       return { ...state, selectedRegion: regSelectAction.region.readMeta }
