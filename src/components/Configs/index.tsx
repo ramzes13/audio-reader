@@ -13,13 +13,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import { ReducersConfigInterface } from '../../reducers/index.t';
 import { toggleActive } from '../../actions/configActions';
-import { setActiveNewRegion } from '../../actions/globalActions';
+import { beginCreateNewRegion } from '../../actions/regionsActions';
 import styles from './styles';
 import ConfigsRegion from './ConfigsRegion';
 
 interface DispatchProps {
   toggleActive: () => void;
-  setActiveNewRegion: () => void;
+  beginCreateNewRegion: () => void;
 }
 class Configs extends React.Component<any, any>{
 
@@ -31,7 +31,7 @@ class Configs extends React.Component<any, any>{
   }
   displayNewRegion() {
     this.toggleDrawer(false)
-    this.props.setActiveNewRegion()
+    this.props.beginCreateNewRegion()
   }
   toggleDrawer(open: boolean) {
     this.setState({ open });
@@ -77,7 +77,7 @@ const mapStateToProps = (state: any): ReducersConfigInterface => ({ ...state.con
 
 const mapDispatchToProps = {
   toggleActive,
-  setActiveNewRegion,
+  beginCreateNewRegion,
 };
 
 const component = connect<ReducersConfigInterface, DispatchProps>(

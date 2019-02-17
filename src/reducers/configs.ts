@@ -23,6 +23,8 @@ const configs = (state: ReducersConfigInterface = defaultState, action: AnyActio
     case regionsActions.REG_EDIT:
       specificAction = <RegionAction>action;
       return { ...state, region: specificAction.region }
+    case regionsActions.REG_CREATE_NEW_REGION:
+      return { ...state, region: <RegionMetaInterface>{} }
     default:
       return state
   }

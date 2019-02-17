@@ -1,4 +1,4 @@
-import { Action, AnyAction } from 'redux'
+import { Action } from 'redux'
 
 import { RegionMetaInterface } from '../index.t';
 import { removeReadingSelection } from './readingActions';
@@ -11,6 +11,7 @@ import {
 export const actions = {
   REG_TOGGLE: 'REG_TOGGLE',
   REG_SAVE_NEW_REGION: 'REG_SAVE_NEW_REGION',
+  REG_CREATE_NEW_REGION: 'REG_CREATE_NEW_REGION',
   REG_SAVE_REGION: 'REG_SAVE_REGION',
   REG_SELECT: 'REG_SELECT',
   REG_EDIT: 'REG_EDIT',
@@ -53,5 +54,14 @@ export function cancelRegionEdit() {
   console.log('cancelRegionEdit')
   return (dispatch: any, getState: any) => {
     dispatch(setInactiveNewRegion());
+    dispatch(removeReadingSelection());
+  }
+}
+
+export function beginCreateNewRegion() {
+  console.log('cancelRegionEdit')
+  return (dispatch: any, getState: any) => {
+    dispatch(setActiveNewRegion());
+    dispatch({ type: actions.REG_CREATE_NEW_REGION });
   }
 }

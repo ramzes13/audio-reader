@@ -39,12 +39,12 @@ class ReadingContainer extends React.Component<Props, any> {
 
   nextPage() {
     this.book.package.metadata.direction === "rtl" ? this.rendition.prev() : this.rendition.next();
-    console.log('nextPage')
+    // console.log('nextPage')
   }
 
   prevPage() {
     this.book.package.metadata.direction === "rtl" ? this.rendition.next() : this.rendition.prev();
-    console.log('prevPage')
+    // console.log('prevPage')
   }
 
   prepareMeta(cfiRange: any) {
@@ -74,11 +74,11 @@ class ReadingContainer extends React.Component<Props, any> {
     var displayed = this.rendition.display(11);
 
     this.rendition.on("layout", function (layout: any) {
-      console.log('layout', { layout });
+      // console.log('layout', { layout });
     });
 
     this.rendition.on("relocated", function (location: any) {
-      console.log('relocated', { location });
+      // console.log('relocated', { location });
     });
 
     this.rendition.themes.default({
@@ -178,7 +178,6 @@ class ReadingContainer extends React.Component<Props, any> {
   render() {
     this.handleSelectedRegion();
 
-    console.log(this.props.selectedRegion);
     return (
       <UiGenericContainer active={this.props.active} toggleActive={this.props.toggleActive}>
         <div id="epub-reading-container" className=""></div>

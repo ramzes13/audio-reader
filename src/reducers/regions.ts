@@ -15,14 +15,13 @@ const configs = (state: ReducersRegionsRegions = defaultState, action: any): Red
       return { ...state, selectedRegionId: action.region.id };
     case actions.REG_SAVE_NEW_REGION:
       return { ...state, regions: state.regions.concat(action.region) };
-
     case actions.REG_SAVE_REGION:
       let regions = state.regions.map(reg => {
         if (reg.id === action.region.id) {
           return action.region;
         }
         return reg;
-      })
+      });
 
       return { ...state, regions }
     default:
